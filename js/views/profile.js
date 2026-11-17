@@ -86,7 +86,9 @@ function unsafeBackup(v, key, depth){
   if(typeof v === "number") return !isFinite(v);
   if(typeof v === "string"){
     if(v.length > 6000000) return true;
-    if(/[<>]/.test(v) && !/^data:image\//.test(v)) return true;
+    // Only the profile photo may hold an image, and only in the strict form below. Everywhere else, no < or >.
+    if(key === "photo") return v !== "" && !/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(v);
+    if(/[<>]/.test(v)) return true;
     if(key && NUM_KEYS.test(key)) return true;
     if(key && ID_KEYS.test(key) && !/^[\w #.:\-]{0,32}$/.test(v)) return true;
     return false;
