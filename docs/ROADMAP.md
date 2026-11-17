@@ -8,6 +8,12 @@ Marjie's big wishlist (Nov 17, 2026) and the decisions she made. Work top to bot
 - **Look = student notebook / scrapbook + cozy storybook, mixed.** Paper texture, sticky notes, washi tape, stamps, handwritten notes, a little tilt, plus soft illustrated scenes. Must not look like generic AI UI.
 - **Plot twist is a secret from Marjie.** Spoilers live only in `docs/SPOILERS.md`. Do not describe the twist in chat, HANDOFF or this file.
 - **Keep going when tokens run out.** A scheduled job continues the work on the `auto-build` branch (never the live `main`). Marjie merges when she wants.
+- **FREE ONLY (Marjie, Nov 17).** Nothing may cost money. No paid APIs, no paid hosting, no domain, no App Store. Only use free tiers and tell Marjie if a free tier has a catch. Concretely:
+  - **Helper chat (phase G):** the default is a free, offline handbook helper (searches her handbook, the app's tips and FAQs, no server). Optional "bring your own free key": the user pastes their own free Google AI Studio (Gemini) key in Profile; the key stays on their device and is never in the repo. No shared server and no key of Marjie's.
+  - **Login, sync, friends, shared savings (phases L and S):** only with a free Supabase (or Firebase Spark) project that Marjie creates herself. Wait for her to say she made it and give the URL and public key. Until then build everything that works without it (local-first, clean data shapes). Never add a paid plan.
+  - **Gmail / Docs / Calendar:** no Google sign-in (OAuth). Use paste-a-link, copy/paste, Web Share, and .ics files instead.
+  - **Reminders when the app is closed:** use .ics calendar files (free). No push server for now.
+  - Skip: custom domain, App Store, paid AI, paid hosting.
 - Audience: Filipino college students, not tied to one school. 4.0-highest and 1.0-highest grading both supported.
 - Build in small steps, test at 390px and desktop, commit after each step, update HANDOFF.
 
@@ -31,7 +37,7 @@ Marjie's big wishlist (Nov 17, 2026) and the decisions she made. Work top to bot
 - [x] **D. Starter side quests.** (done Nov 17 on branch auto-build) At least 5 ready-made, optional, editable and removable.
 - [ ] **E. School hub.** Planner (tasks, deadlines, class schedule), handbook (paste or upload text), allowed absences tracker, grading rules, projects hub (compile all projects and open easily).
 - [ ] **F. Study tools.** Focus mode (timer, keep screen on, companion studies with you), flashcards and quiz maker (flip, multiple choice, type answer, streaks), earns Treats.
-- [ ] **G. Helper chat ("Ask").** Chat that answers from the handbook and app knowledge. Optional real AI through a small server (worker file included, not deployed). API keys never go in the frontend.
+- [ ] **G. Helper chat ("Ask"), FREE.** Offline helper that answers from the handbook, school rules, the user's own data (GPA, budget, absences) and app tips. Optional "bring your own free key" (Gemini free tier) saved only on the user's device. No server, no keys in the repo.
 - [ ] **L. Login + sync (prerequisite for friends).** Sign up and log in so Marjie's laptop and phone share the same data, and so friends can be invited. Needs a backend (Supabase or Firebase). Marjie must create the project (free) and give the project URL and the public key; the app must use row-level security so people only see their own data. Add a short privacy note. Local-only use must keep working without an account.
 - [ ] **S. Friends and shared savings.** (1) Invite friends with a link; collaborate on shared things (shared goals, study groups, shared project boards). (2) A savings thingy: set a goal, save toward it alone or **with others**, everyone's progress in one place, nudges and cheers in the friend voice. The app only tracks pledges and progress. It never moves real money. Share only what each person chooses (goal progress, not their budget or expenses). Invite links expire and can be turned off. Needs phase L.
 - [ ] **H. Plot twist + extras.** The secret twist. More customizing (accent colors, light/dark, fonts, card style, companion rooms). More animations.

@@ -22,6 +22,8 @@
 
 **Backup safety (Nov 17):** restoring a backup runs `unsafeBackup()` in js/views/profile.js first (rejects `<` `>`, quotes in ids and keys, strings in number fields, `__proto__`, deep nesting). When you add new saved fields, add id-like names to ID_KEYS and number names to NUM_KEYS there.
 
+**FREE ONLY: Marjie decided nothing may cost money (see ROADMAP decisions).** Helper chat = free offline helper + optional bring-your-own free key. Login/friends/shared savings wait for Marjie's own free Supabase project.
+
 **Last updated:** Nov 17, 2026 (auto-build)
 
 ## Done
