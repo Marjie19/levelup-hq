@@ -10,7 +10,7 @@ function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; cle
 function pomSvg(cls){ return petSvg(activePet(), {cls:cls}); }
 
 // Which half of a tab is showing on phone (laptop shows both side by side)
-const pane = {journey:"map", money:"spend", school:"grades"};
+const pane = {journey:"map", money:"spend", school:"grades", study:"focus"};
 function segHtml(group, opts){
   return '<div class="seg" role="tablist" aria-label="Switch view">' + opts.map(([k,label]) =>
     '<button type="button" role="tab" data-pane="'+group+':'+k+'" aria-selected="'+(pane[group]===k)+'">'+label+'</button>').join("") + '</div>';

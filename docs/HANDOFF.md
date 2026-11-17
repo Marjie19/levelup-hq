@@ -26,6 +26,8 @@
 
 **School hub (Phase E, Nov 17).** js/views/school.js (new; planner.js deleted). Tabs are now Home, Journey, Money, School (#school; old #deans and #planner links still work). pane.school = grades|planner|absences|handbook|projects. New data: S.tasks, S.classes, S.courses (absence subjects), S.docs (handbook text, caps 300k per doc and 900k total), S.projects (links are checked by safeUrl: only http/https). Finished tasks (+20 growth, max 100) and done projects (+100, max 20) feed growth. The backup validator in profile.js knows the new fields (status, start, end, allowed, absent, day, url). Handbook helper (phase G) can reuse searchDocs() and findRules().
 
+**Study tab (Phase F, Nov 17).** js/views/study.js. Tabs: Home, Journey, Study, Money, School. pane.study = focus|cards. New data: S.decks [{id,title,cards:[{id,front,back,box,due}]}], S.study {days:{date:{min,cards}}, earned:{date:treats}}, S.focus (null or {start,end,min,left}; survives reloads). Card fields are front/back on purpose (keys a, m, s are color keys in the backup validator). Treats from studying go to S.studyTreats, capped at 30 per day (STUDY_DAILY_CAP). Leitner boxes 1 to 5 (LEITNER days). Session sheets use the class `noclose` so a tap outside does not end them. Backup validator got BOOL_KEYS (done, setup, welcomed, questsSeeded, pic must be true/false) and more NUM_KEYS after an automated review.
+
 **Last updated:** Nov 17, 2026 (auto-build)
 
 ## Done

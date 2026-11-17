@@ -8,7 +8,7 @@ const DEFAULT_GOALS = [
 ];
 function fresh(){
   return {v:1,setup:false,name:"",age:20,years:4,tpy:3,cutoff:3.5,scale:"4",minUnits:12,worst:null,gpas:{},deanFlags:{},quests:starterQuests(),questsSeeded:true,
-    tasks:[],classes:[],courses:[],docs:[],projects:[],
+    tasks:[],classes:[],courses:[],docs:[],projects:[],decks:[],study:{days:{},earned:{}},focus:null,
     journey:{tpl:"tri4",stops:buildStops("tri4")},customStops:null,theme:"plain",petAt:null,
     pets:[{id:uid8(),name:"Pom",species:"pom",m:"#f7a94f",a:"#d9772a",s:"#f3c9a1",acc:"none",hunger:80,joy:80,t:Date.now(),care:0,g0:0}],activePet:null,
     room:"cozy",owned:{acc:["none"],room:["cozy"]},treatsSpent:0,bonusTreats:0,studyTreats:0,lastGift:"",

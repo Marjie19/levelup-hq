@@ -32,13 +32,13 @@ js/storage.js       save/load (localStorage only for now)
 js/game.js          growth, Dean's List rules (XP is gone: companions grow, you earn Treats)
 js/pets.js          companions: drawings, care, stages, Treats
 js/petsheets.js     companion sheets: make/edit, feed, style shop
-js/views/*.js       one file per screen part: header, home (companion room), journey, deans (Dean's List calculator, shown inside School), school (planner, absences, handbook, projects), money, profile
+js/views/*.js       one file per screen part: header, home (companion room), journey, deans (Dean's List calculator, shown inside School), school (planner, absences, handbook, projects), study (focus mode, flashcards, quiz), money, profile
 js/coach.js         money coach and friend voice; js/reminders.js reminders and .ics; js/tips.js welcome and tips; js/fx.js confetti
 js/modals.js        pop-up sheets (term GPA, goals, setup, settings, budget)
 js/journeyedit.js   journey sheets: pick template, theme and pet, edit own stops, milestones
 js/receipts.js      receipt photos (saved in IndexedDB) and reading the total from them
 js/events.js        click and submit handlers
-js/app.js           tab routing (#home, #journey, #school, #money, #profile) and start-up
+js/app.js           tab routing (#home, #journey, #study, #school, #money, #profile) and start-up
 docs/ROADMAP.md     phases and feature ideas
 docs/HANDOFF.md     what's done, what's next, known bugs
 ```

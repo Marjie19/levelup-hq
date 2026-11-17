@@ -4,12 +4,12 @@
 function modal(html, onReady, cls){
   const m = $("#modal");
   m.innerHTML = '<div class="scrim" id="scrim"><div class="sheet'+(cls?" "+cls:"")+'" role="dialog" aria-modal="true">'+html+'</div></div>';
-  m.querySelector("#scrim").addEventListener("click", e => { if(e.target.id==="scrim" && S.setup) closeModal(); });
+  m.querySelector("#scrim").addEventListener("click", e => { if(e.target.id==="scrim" && S.setup && !m.querySelector(".sheet.noclose")) closeModal(); });
   const f = m.querySelector("input,select,button"); if(f) f.focus();
   if(onReady) onReady(m);
 }
 function closeModal(){ $("#modal").innerHTML = ""; }
-document.addEventListener("keydown", e => { if(e.key==="Escape" && S.setup) closeModal(); });
+document.addEventListener("keydown", e => { if(e.key==="Escape" && S.setup && !$("#modal .sheet.noclose")) closeModal(); });
 
 function openTerm(k){
   const [y,t] = k.split("-");

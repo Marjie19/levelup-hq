@@ -59,7 +59,7 @@ function renderJourney(){
   else {
     html += '<ul class="list">';
     S.quests.slice().sort((a,b)=>a.done-b.done).forEach(q => {
-      html += '<li class="row'+(q.done?" done":"")+'"><button type="button" class="check" aria-pressed="'+q.done+'" data-qtoggle="'+q.id+'" aria-label="Mark done">'+(q.done?"✓":"")+'</button>' +
+      html += '<li class="row'+(q.done===true?" done":"")+'"><button type="button" class="check" aria-pressed="'+(q.done===true)+'" data-qtoggle="'+q.id+'" aria-label="Mark done">'+(q.done?"✓":"")+'</button>' +
         '<div class="grow"><div class="t"><button type="button" class="linkbtn" data-qedit="'+q.id+'">'+esc(q.title)+'</button></div><div class="s">'+QUEST_LABEL[q.kind]+(q.done?", completed":", in progress")+'</div></div>' +
         '<span class="pill xp">'+tx(QUEST_XP[q.kind]||80)+'</span><button type="button" class="x" data-qdel="'+q.id+'" aria-label="Delete">×</button></li>';
     });

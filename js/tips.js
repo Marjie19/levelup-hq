@@ -6,6 +6,7 @@ const TIPS = {
   journey:["Your road to graduation","Tap a stop to log your term GPA or tick off a milestone. Use Customize to pick another template or build your own."],
   deans:["Dean's List calculator","Add your courses and grades to see your GPA live. Set your school's rules with Edit rules, then save the result to a term."],
   money:["Money, bestie edition","Log what you spend with + Expense. Set a budget and limits, and use the wait list before buying something you only kinda want."],
+  study:["Lock in and quiz yourself","Focus keeps your screen on while your companion studies with you. Cards turns your notes into flashcards and quiz games. Both earn treats."],
   school:["Everything school in one place","Grades is your Dean's List calculator. Planner keeps tasks and classes, Absences counts what you can still miss, Handbook finds your school rules, Projects keeps all your links."],
   planner:["Planner is coming","Tasks, deadlines and your class schedule will live here. For now, reminders are in Profile."],
   profile:["Make it yours","Everything saves as you type. Pick your picture, colors and voice. Save a backup file now and then."]

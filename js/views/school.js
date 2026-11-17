@@ -43,7 +43,7 @@ function todayCardHtml(){
 }
 function taskRow(t){
   const late = !t.done && t.due && dueDay(t) < today();
-  return '<li class="row'+(t.done?" done":"")+'"><button type="button" class="check" aria-pressed="'+t.done+'" data-ttoggle="'+esc(t.id)+'" aria-label="Mark done">'+(t.done?"✓":"")+'</button>' +
+  return '<li class="row'+(t.done===true?" done":"")+'"><button type="button" class="check" aria-pressed="'+(t.done===true)+'" data-ttoggle="'+esc(t.id)+'" aria-label="Mark done">'+(t.done===true?"✓":"")+'</button>' +
     '<div class="grow"><div class="t">'+esc(t.title)+'</div><div class="s'+(late?" late":"")+'">'+(t.course?esc(t.course)+(t.due?", ":""):"")+esc(dueText(t.due))+'</div></div>' +
     (t.due && !t.done ? '<button type="button" class="x" data-tics="'+esc(t.id)+'" aria-label="Add to phone calendar" title="Add to phone calendar">📅</button>' : '') +
     '<button type="button" class="x" data-tdel="'+esc(t.id)+'" aria-label="Delete task">×</button></li>';

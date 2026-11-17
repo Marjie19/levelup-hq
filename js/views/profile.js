@@ -78,7 +78,8 @@ function profileMsg(t){ const m = $("#bkMsg"); if(m) m.textContent = t; toast(t)
 // numbers must be plain, and no text may contain < or >. IF YOU ADD NEW SAVED FIELDS, add id-like ones to ID_KEYS
 // and number ones to NUM_KEYS so a bad backup cannot sneak code into the page.
 const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|status|start|end|m|a|s)$/;
-const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v|allowed|absent|day)$/;
+const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v|allowed|absent|day|min|cards|left|box|best|n|count)$/;
+const BOOL_KEYS = /^(done|setup|welcomed|questsSeeded|pic)$/;
 function unsafeBackup(v, key, depth){
   depth = depth || 0;
   if(depth > 12) return true;
@@ -91,6 +92,7 @@ function unsafeBackup(v, key, depth){
     if(/[<>]/.test(v)) return true;
     if(key === "url" && !/^https?:\/\/[^\s<>"'`]{1,500}$/.test(v)) return true;   // project links must be plain web addresses
     if(key && NUM_KEYS.test(key)) return true;
+    if(key && BOOL_KEYS.test(key)) return true;   // yes/no fields must be true or false, never text
     if(key && ID_KEYS.test(key) && !/^[\w #.:\-]{0,32}$/.test(v)) return true;
     return false;
   }
