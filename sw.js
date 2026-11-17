@@ -2,7 +2,7 @@
    Strategy: try the network first (so updates show up right away), and fall back to the saved copy when offline. */
 "use strict";
 
-const CACHE = "levelup-hq-v7";
+const CACHE = "levelup-hq-v8";
 const SHELL = [
   "./", "index.html", "css/styles.css", "favicon.svg", "manifest.webmanifest",
   "js/templates.js", "js/state.js", "js/utils.js", "js/fx.js", "js/storage.js", "js/game.js", "js/pets.js",

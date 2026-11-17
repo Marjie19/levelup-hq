@@ -14,6 +14,8 @@ document.addEventListener("click", e => {
   if(b.dataset.grad) return toast(termKeys().every(hasGpa) ? "Congrats, graduate!" : "Clear every term to unlock graduation");
   if(b.id === "addGoal") return openGoal(null);
   if(b.id === "addQuest") return openQuest();
+  if(b.dataset.qedit) return openQuest(b.dataset.qedit);
+  if(b.id === "addStarters"){ const have = S.quests.map(q => q.title); starterQuests().filter(q => !have.includes(q.title)).forEach(q => S.quests.push(q)); save(); renderAll(); return toast("Starter ideas added"); }
   if(b.id === "xpHelp") return openTreatsHelp();
   if(b.id === "petBtn") return cuddleTap(e);
   if(b.id === "feedBtn") return openFeed();
@@ -43,7 +45,7 @@ document.addEventListener("click", e => {
 document.addEventListener("submit", e => {
   const f = e.target;
   if(coachSubmit(f, e)) return;
-  if(f.id === "questForm"){ e.preventDefault(); const t=$("#qTitle").value.trim(); if(!t) return; S.quests.push({id:uid8(),title:t,kind:$("#qKind").value,done:false}); save(); closeModal(); pane.journey="quests"; renderAll(); toast("New side quest added"); }
+  if(f.id === "questForm"){ e.preventDefault(); const t=$("#qTitle").value.trim(); if(!t) return; const eq = f.dataset.id && S.quests.find(x=>x.id===f.dataset.id); if(eq){ eq.title=t; eq.kind=$("#qKind").value; } else S.quests.push({id:uid8(),title:t,kind:$("#qKind").value,done:false}); save(); closeModal(); pane.journey="quests"; renderAll(); toast(eq ? "Quest updated" : "New side quest added"); }
   else if(f.id === "expForm"){ e.preventDefault(); const a=parseFloat($("#eAmt").value); if(!(a>0)) return;
     const eid=uid8(), before=monthSpent(), stBefore=streakDays();
     const ex={id:eid,pic:!!pendingPic,amt:Math.round(a*100)/100,cat:pickedCat,kind:pickedKind,note:$("#eNote").value.trim(),date:$("#eDate").value||today(),ts:Date.now()};

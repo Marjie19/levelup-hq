@@ -89,12 +89,14 @@ function openBudget(){
     m.querySelector("#bForm").onsubmit = e => { e.preventDefault(); const v=parseFloat(m.querySelector("#bIn").value); if(v>=0){ S.budget=v; save(); } closeModal(); renderAll(); };
   });
 }
-function openQuest(){
-  modal('<h3>New side quest</h3><form id="questForm" class="sheetform">' +
-    '<div class="field"><label for="qTitle">Quest</label><input class="inp" id="qTitle" maxlength="80" placeholder="e.g. Google Data Analytics cert" required></div>' +
+function openQuest(id){
+  const q = id && S.quests.find(x => x.id === id);
+  modal('<h3>'+(q?"Edit side quest":"New side quest")+'</h3><form id="questForm" class="sheetform"'+(q?' data-id="'+q.id+'"':"")+'>' +
+    '<div class="field"><label for="qTitle">Quest</label><input class="inp" id="qTitle" maxlength="80" placeholder="e.g. Google Data Analytics cert" value="'+(q?esc(q.title):"")+'" required></div>' +
     '<div class="field"><label for="qKind">Type</label><select class="inp" id="qKind"><option value="cert">Certificate (+12 🍪)</option><option value="hackathon">Hackathon (+15 🍪)</option><option value="project">Project (+10 🍪)</option><option value="org">Org / role (+8 🍪)</option></select></div>' +
-    '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Add quest</button></div></form>', m => {
+    '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">'+(q?"Save":"Add quest")+'</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
+      if(q) m.querySelector("#qKind").value = q.kind;
     });
 }
 function openExpense(){

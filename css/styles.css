@@ -573,3 +573,6 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:.2px}
 .dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
 .dots i.on{background:var(--accent);transform:scale(1.25)}
 .welcome .acts{justify-content:center;width:100%}
+
+/* Quests: tap a title to edit */
+.linkbtn{border:0;background:none;padding:0;font:inherit;font-weight:700;color:inherit;text-align:left;cursor:pointer;text-decoration:underline dotted var(--line);text-underline-offset:4px}

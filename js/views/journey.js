@@ -55,16 +55,17 @@ function renderJourney(){
 
   // side quests
   html += '<section class="card pane" data-pane-id="quests"><div class="cardhead"><h2>Side quests</h2><span class="headbtns"><button type="button" class="round" id="xpHelp" aria-label="How treats work">?</button><button type="button" class="btn acc sm" id="addQuest">+ Quest</button></span></div>';
-  if(!S.quests.length) html += '<div class="empty">'+pomFor("pom")+'<p>No side quests yet. Add the cert, hackathon or project you\'re working on to start earning XP.</p></div>';
+  if(!S.quests.length) html += '<div class="empty">'+pomFor("pom")+'<p>No side quests yet. Add one, or tap Add starter ideas below.</p></div>';
   else {
     html += '<ul class="list">';
     S.quests.slice().sort((a,b)=>a.done-b.done).forEach(q => {
       html += '<li class="row'+(q.done?" done":"")+'"><button type="button" class="check" aria-pressed="'+q.done+'" data-qtoggle="'+q.id+'" aria-label="Mark done">'+(q.done?"✓":"")+'</button>' +
-        '<div class="grow"><div class="t">'+esc(q.title)+'</div><div class="s">'+QUEST_LABEL[q.kind]+(q.done?", completed":", in progress")+'</div></div>' +
+        '<div class="grow"><div class="t"><button type="button" class="linkbtn" data-qedit="'+q.id+'">'+esc(q.title)+'</button></div><div class="s">'+QUEST_LABEL[q.kind]+(q.done?", completed":", in progress")+'</div></div>' +
         '<span class="pill xp">'+tx(QUEST_XP[q.kind]||80)+'</span><button type="button" class="x" data-qdel="'+q.id+'" aria-label="Delete">×</button></li>';
     });
     html += '</ul>';
   }
+  if(STARTER_QUESTS.some(s => !S.quests.some(q => q.title === s[0]))) html += '<button type="button" class="btn ghost sm" id="addStarters" style="margin-top:12px">+ Add starter ideas</button>';
   html += '</section></div>';
   $("#view").innerHTML = html;
   requestAnimationFrame(afterJourneyDraw);

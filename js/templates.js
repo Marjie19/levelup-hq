@@ -34,3 +34,15 @@ const THEMES = [
   {id:"beach", name:"Beach", emoji:"🏖️", decor:["🐚","🌴","🌊"]}
 ];
 const STOP_ICONS = ["⭐","🎓","📚","💼","🏆","📝","🏅","✈️","🧪","🩺","⚖️","🏗️","💻","🎨","❤️","🚀"];
+
+// Ready-made side quests. Optional: edit, finish or delete any of them.
+const STARTER_QUESTS = [
+  ["Join one school org or club","org"],
+  ["Finish a free online course and get the certificate","cert"],
+  ["Build a small portfolio project","project"],
+  ["Join a hackathon or case competition","hackathon"],
+  ["Set up your LinkedIn and polish your resume","project"],
+  ["Ask one professor or senior for career advice","org"],
+  ["Save your first ₱1,000","project"]
+];
+const starterQuests = () => STARTER_QUESTS.map(([title,kind]) => ({id:Math.random().toString(36).slice(2,10),title,kind,done:false,starter:true}));

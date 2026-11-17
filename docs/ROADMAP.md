@@ -28,7 +28,7 @@ Marjie's big wishlist (Nov 17, 2026) and the decisions she made. Work top to bot
 - [x] **A. Companions replace XP.** (done Nov 17, live on main) Up to 3, person/animal/other, customize, care (feed, play, cuddle), Treats, growth stages, unlock 2nd and 3rd as you grow. Remove XP/level wording everywhere.
 - [x] **B. Humanized look.** (done Nov 17, live on main) Notebook paper + tape + sticky-note header + highlighter tabs + stamps, Gaegu/Nunito/Caveat fonts, tab settle animation, confetti, more motion. The new nav (Home, Journey, Study, Money, School) happens in phases E and F when Study and School exist. Still to polish later: companion room storybook scenes, more hand-drawn details.
 - [x] **C. Welcome + short instructions.** (done Nov 17 on branch auto-build) First-open story welcome, a short tip on every screen (2 to 3 lines, dismissible, "?" to reopen).
-- [ ] **D. Starter side quests.** At least 5 ready-made, optional, editable and removable.
+- [x] **D. Starter side quests.** (done Nov 17 on branch auto-build) At least 5 ready-made, optional, editable and removable.
 - [ ] **E. School hub.** Planner (tasks, deadlines, class schedule), handbook (paste or upload text), allowed absences tracker, grading rules, projects hub (compile all projects and open easily).
 - [ ] **F. Study tools.** Focus mode (timer, keep screen on, companion studies with you), flashcards and quiz maker (flip, multiple choice, type answer, streaks), earns Treats.
 - [ ] **G. Helper chat ("Ask").** Chat that answers from the handbook and app knowledge. Optional real AI through a small server (worker file included, not deployed). API keys never go in the frontend.
