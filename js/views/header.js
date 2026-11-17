@@ -12,7 +12,7 @@ function renderHeader(){
   $("#xpbarWrap").setAttribute("aria-valuenow", happy);
   $("#xpline").textContent = p.name + " is " + MOOD_TEXT[mood] + ".";
   $("#treatPill").innerHTML = '🍪 <b class="num">' + treats() + '</b>';
-  $("#topPom").innerHTML = petSvg(p, {cls:"pom"});
+  $("#topPom").innerHTML = avatarHtml();
   $("#brandPom").innerHTML = petSvg(p, {cls:"pom"});
   // Little hop when you earn something
   const g = growth();

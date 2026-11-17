@@ -530,3 +530,31 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:.2px}
 .jarform .inp{flex:1;min-width:110px;padding:8px 10px}
 .jarform .btn{box-shadow:none;padding:8px 14px}
 @media (prefers-reduced-motion:reduce){.streak .flame{animation:none}}
+
+/* Profile page */
+:root[data-accent="rose"]{--accent:#e8627f;--accent-soft:#ffdde5;--accent-ink:#5e0f25}
+:root[data-accent="mint"]{--accent:#2fae83;--accent-soft:#d6f3e7;--accent-ink:#06402b}
+:root[data-accent="sky"]{--accent:#3b8fd9;--accent-soft:#d9eafb;--accent-ink:#0b3558}
+:root[data-accent="grape"]{--accent:#9a63e0;--accent-soft:#eadcfb;--accent-ink:#2f1060}
+@media (prefers-color-scheme: dark){
+  :root[data-accent="rose"]:not([data-theme="light"]){--accent:#ff8ba3;--accent-soft:#4d2733;--accent-ink:#ffd6de}
+  :root[data-accent="mint"]:not([data-theme="light"]){--accent:#5fd3a9;--accent-soft:#1f4034;--accent-ink:#c9f5e3}
+  :root[data-accent="sky"]:not([data-theme="light"]){--accent:#6cb3f2;--accent-soft:#213a52;--accent-ink:#d3e9fc}
+  :root[data-accent="grape"]:not([data-theme="light"]){--accent:#be96f5;--accent-soft:#3c2b58;--accent-ink:#e8d9fd}
+}
+:root[data-theme="dark"][data-accent="rose"]{--accent:#ff8ba3;--accent-soft:#4d2733;--accent-ink:#ffd6de}
+:root[data-theme="dark"][data-accent="mint"]{--accent:#5fd3a9;--accent-soft:#1f4034;--accent-ink:#c9f5e3}
+:root[data-theme="dark"][data-accent="sky"]{--accent:#6cb3f2;--accent-soft:#213a52;--accent-ink:#d3e9fc}
+:root[data-theme="dark"][data-accent="grape"]{--accent:#be96f5;--accent-soft:#3c2b58;--accent-ink:#e8d9fd}
+.btn.acc{color:#1d0e00}
+.profhead{display:flex;align-items:center;gap:14px}
+.avbig{flex:none;width:84px;height:84px;border-radius:26px;background:var(--accent-soft);display:grid;place-items:center;overflow:hidden;border:2px dashed var(--line);transform:rotate(-3deg)}
+.avbig .pom{width:72px;height:72px}
+.avimg{width:100%;height:100%;object-fit:cover;display:block}
+.toppom .avimg{border-radius:18px}
+.profhead h2{font-size:1.5rem;overflow-wrap:anywhere}
+.profhead .hand{margin:2px 0 0;font-family:var(--hand);font-size:1.2rem;color:var(--muted)}
+.swatches{gap:10px}
+.swatch{width:40px;height:40px;border-radius:50%;border:3px solid var(--surface);background:var(--sw);box-shadow:0 0 0 2px var(--line),0 3px 0 var(--line);padding:0}
+.swatch[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink),0 3px 0 var(--line)}
+.swatch:active{transform:translateY(2px)}

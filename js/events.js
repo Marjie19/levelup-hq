@@ -1,7 +1,7 @@
 /* Clicks and form submits */
 "use strict";
 
-$("#settingsBtn").onclick = openSettings;
+$("#settingsBtn").onclick = () => { location.hash = "profile"; };
 // Skip link: move focus to the content without changing the tab in the URL
 $(".skip").onclick = e => { e.preventDefault(); $("#view").focus(); };
 document.addEventListener("click", e => {

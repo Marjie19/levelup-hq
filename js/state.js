@@ -13,7 +13,7 @@ function fresh(){
     room:"cozy",owned:{acc:["none"],room:["cozy"]},treatsSpent:0,bonusTreats:0,studyTreats:0,lastGift:"",
     calc:{term:"",courses:[1,2,3,4].map(()=>({id:uid8(),name:"",units:3,grade:null}))},
     goals:DEFAULT_GOALS.map(([title,age])=>({id:uid8(),title,age,done:false})),
-    budget:3000,expenses:[],wishes:[],tone:"real",catLimits:{},dayCap:0,challenge:null,streakFrom:"",waits:[],jar:0,jarGoal:0,skipped:0,reminders:[],remind:{notify:false,feed:true,budget:true,evening:false,eveningAt:"20:00"},remindLog:{},updated:0};
+    budget:3000,expenses:[],wishes:[],tone:"real",catLimits:{},dayCap:0,challenge:null,streakFrom:"",waits:[],jar:0,jarGoal:0,skipped:0,reminders:[],remind:{notify:false,feed:true,budget:true,evening:false,eveningAt:"20:00"},remindLog:{},look:{mode:"auto",accent:"apricot"},profile:{school:"",program:"",photo:"",avatar:"pet"},updated:0};
 }
 let S = fresh();
 const LS_KEY = "levelup-hq-v1";
