@@ -238,3 +238,4 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 .skip:focus{top:12px}
 [hidden]{display:none!important}
 #view:focus{outline:none}
+.tip{margin:0;padding:10px 12px;border-radius:var(--r-sm);background:var(--plum-soft);color:var(--ink);font-size:.85rem}

@@ -1,0 +1,16 @@
+{
+  "name": "LevelUp HQ",
+  "short_name": "LevelUp",
+  "description": "A cute, game-like student life app: graduation journey, Dean's List calculator, budget and wishlist.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f5f2fb",
+  "theme_color": "#6a4bd6",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

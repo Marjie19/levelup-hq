@@ -73,7 +73,7 @@ function readSetup(m){
   if(c>=0 && c<=4) S.cutoff = c;
 }
 function openSettings(){
-  modal('<h3>Settings</h3><p class="hint" style="margin:0">Your data is saved on this device only.</p><form id="setForm" class="sheetform">' + setupFields(false) +
+  modal('<h3>Settings</h3><p class="hint" style="margin:0">Your data is saved on this device only.</p>' + installTip() + '<form id="setForm" class="sheetform">' + setupFields(false) +
     '<div class="acts"><button type="button" class="btn ghost" id="reset" style="margin-right:auto;color:var(--warn)">Reset everything</button><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
       let armed = false;
@@ -121,4 +121,11 @@ function openXpHelp(){
     '<p class="muted" style="margin:0">Every '+PER_LEVEL+' XP is a new level.</p><div class="acts"><button type="button" class="btn acc" id="cancel">Got it</button></div>', m => {
       m.querySelector("#cancel").onclick = closeModal;
     });
+}
+
+// Shows how to install the app, unless it is already installed
+function installTip(){
+  const installed = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+  if(installed) return '<p class="tip">You are using the installed app. Your data lives in this app only.</p>';
+  return '<p class="tip"><b>Install on your phone:</b> open this page in Safari, tap the Share button, then <b>Add to Home Screen</b>. The installed app keeps its own data, separate from Safari.</p>';
 }
