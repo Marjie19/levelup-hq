@@ -1,5 +1,10 @@
 # Handoff
 
+**Auto-build note (Nov 17, 2026, 7:05 PM):** work is on branch `auto-build`, not live until Marjie merges it into `main`.
+
+**Auto-build paused on purpose.** Phase A (Companions replace XP) is already being built in the main project folder as uncommitted changes: `js/pets.js`, `js/petsheets.js`, `js/views/home.js` and edits to 13 other files, last saved Nov 17, 4:57 PM. Building Phase A again on this branch would make two different versions that clash when merged, and the later phases (B to H) all touch the same files. So the auto-build run built nothing. Next run: once the companion work is committed and pushed to `main` and Phase A is ticked in `docs/ROADMAP.md`, the auto-build will merge `origin/main` and continue with the first unticked phase.
+
+---
 **Last updated:** Nov 17, 2026
 
 ## Done
