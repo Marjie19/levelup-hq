@@ -31,6 +31,16 @@ Audience: Filipino college students, not tied to one school. Build order:
 3. **Journey templates (WAITING for Marjie to say "build it").** Marjie wants: several ready-made Journey templates the user picks from, plus one fully custom Journey they edit themselves. Combine with the earlier ideas below (term names, map theme, pet + name, own milestones, pet walks to the next stop). Not decided yet: which templates, and what a template contains (stops, theme, pet). Ask or grill before building.
    Earlier idea list, **Customizable Journey:** program length + term names (Trimester/Semester/Term), map theme (Forest, Space, Candy, Beach), pet choice + name, own milestones (icon, color, XP), pet walks along the map to the next stop. Not now: confetti, drag-to-reorder.
 
+## Master build list (Marjie, Nov 17). When she says "build it", build ALL of these, in small steps, grill-me first
+1. **Journey templates + one fully custom journey** (see item 3 above).
+2. **Projects hub:** users put all their school projects in one place and open them easily (links, files, notes, deadlines, status). Open: what counts as a "project" and how files are stored.
+3. **AI helper:** a chat where students can talk to someone and ask questions, ideally aware of their handbook, grades and rules.
+4. **Handbook + school rules:** users add their school handbook so the app stays up to date. It holds the grading system (GPA; 4.0-highest or 1.0-highest, already built in the Dean's List tab), allowed absences, and other rules. Absences need a tracker (count vs allowed).
+Risks to settle before building:
+- **AI needs a server.** An API key must never be in the frontend (the repo is public). Needs a small proxy (for example a Cloudflare Worker) that holds the key, plus rate limits and a cost plan (who pays for other students' chats).
+- **Handbook storage and privacy.** PDFs can be big. Browser storage is limited (use IndexedDB). Sending handbook text to an AI is a privacy choice users should see and agree to.
+- Data is per device (no login or sync yet), so projects and handbook would not move between phone and laptop until Phase 3.
+
 ## Next
 1. Marjie tries Add to Home Screen on her iPhone and says if it works. Also test the Dean's List tab on the phone.
 2. Journey templates + custom journey: wait for Marjie's go, then grill-me on the templates, then build in small steps. Use termLabel(k) in js/game.js for term names.
