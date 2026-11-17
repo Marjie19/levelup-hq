@@ -558,3 +558,18 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:.2px}
 .swatch{width:40px;height:40px;border-radius:50%;border:3px solid var(--surface);background:var(--sw);box-shadow:0 0 0 2px var(--line),0 3px 0 var(--line);padding:0}
 .swatch[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ink),0 3px 0 var(--line)}
 .swatch:active{transform:translateY(2px)}
+
+/* Tips + welcome */
+.tipnote{margin:0 0 14px;padding-right:40px;font-size:1.05rem}
+.tipnote b{display:block;font-size:1.3rem}
+.tipnote p{margin:2px 0 0;font-family:var(--body);font-size:.88rem;font-weight:600;line-height:1.35}
+.tipnote .x{position:absolute;top:4px;right:4px;color:var(--ink)}
+#tipsBtn b{font-family:var(--display);font-size:1.3rem;line-height:1}
+.welcome{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.wart{font-size:4rem;line-height:1;animation:hop .8s cubic-bezier(.3,1.6,.5,1)}
+.welcome h3{font-size:1.7rem}
+.welcome .hand{margin:0;font-family:var(--hand);font-size:1.35rem;line-height:1.2;color:var(--muted)}
+.dots{display:flex;gap:8px;margin:4px 0}
+.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--accent);transform:scale(1.25)}
+.welcome .acts{justify-content:center;width:100%}

@@ -2,12 +2,12 @@
    Strategy: try the network first (so updates show up right away), and fall back to the saved copy when offline. */
 "use strict";
 
-const CACHE = "levelup-hq-v6";
+const CACHE = "levelup-hq-v7";
 const SHELL = [
   "./", "index.html", "css/styles.css", "favicon.svg", "manifest.webmanifest",
   "js/templates.js", "js/state.js", "js/utils.js", "js/fx.js", "js/storage.js", "js/game.js", "js/pets.js",
   "js/views/header.js", "js/views/home.js", "js/views/journey.js", "js/views/deans.js", "js/coach.js", "js/views/money.js", "js/views/planner.js", "js/views/profile.js",
-  "js/petsheets.js", "js/journeyedit.js", "js/receipts.js", "js/modals.js", "js/reminders.js", "js/events.js", "js/app.js",
+  "js/petsheets.js", "js/journeyedit.js", "js/receipts.js", "js/modals.js", "js/tips.js", "js/reminders.js", "js/events.js", "js/app.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"
 ];
 

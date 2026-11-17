@@ -11,5 +11,5 @@ function save(){
 }
 function initStorage(){
   setSync("Saved on this device");
-  if(!S.setup) setTimeout(()=>{ if(!S.setup && !$("#modal").innerHTML) openSetup(); }, 400);
+  if(!S.setup) setTimeout(()=>{ if(!S.setup && !$("#modal").innerHTML){ if(S.welcomed) openSetup(); else openWelcome(); } }, 400);
 }

@@ -64,6 +64,7 @@ function renderProfile(){
       '<p class="hint" style="margin:0">Your data lives only on this device. Save a backup file to move it between Safari, the installed app and your laptop. Receipt photos are not in the backup.</p>' +
       '<div class="acts" style="justify-content:flex-start"><button type="button" class="btn acc" id="bkSave">⬇ Save backup</button><label class="btn ghost" for="bkFile" style="cursor:pointer">⬆ Restore backup</label><input id="bkFile" type="file" accept=".json,application/json" hidden></div>' +
       '<p class="hint" id="bkMsg" style="margin:0" role="status"></p>' + installTip() +
+      '<button type="button" class="btn ghost" id="replayWelcome" style="align-self:flex-start">👋 Replay the welcome</button>' +
       '<button type="button" class="btn ghost" id="profReset" style="align-self:flex-start;color:var(--warn)">Reset everything</button>' +
     '</div></section></div>';
 }
