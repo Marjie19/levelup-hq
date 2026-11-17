@@ -2,7 +2,7 @@
    Strategy: try the network first (so updates show up right away), and fall back to the saved copy when offline. */
 "use strict";
 
-const CACHE = "levelup-hq-v1";
+const CACHE = "levelup-hq-v2";
 const SHELL = [
   "./", "index.html", "css/styles.css", "favicon.svg", "manifest.webmanifest",
   "js/state.js", "js/utils.js", "js/storage.js", "js/game.js",
@@ -31,7 +31,8 @@ self.addEventListener("fetch", e => {
   if(!sameOrigin && !isFont) return;
 
   e.respondWith(
-    fetch(req).then(res => {
+    // "no-cache" makes the browser ask the server if the file changed, so updates show up right away
+    fetch(sameOrigin ? req.url : req, sameOrigin ? {cache: "no-cache"} : undefined).then(res => {
       if(res && (res.ok || res.type === "opaque")){
         const copy = res.clone();
         caches.open(CACHE).then(c => c.put(req, copy));
