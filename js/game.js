@@ -7,8 +7,17 @@ const TITLES = ["Freshie","Explorer","Grinder","Achiever","Scholar","Trailblazer
 const PER_LEVEL = 500;
 function termKeys(){ const k=[]; for(let y=1;y<=S.years;y++) for(let t=1;t<=S.tpy;t++) k.push(y+"-"+t); return k; }
 function hasGpa(k){ return typeof S.gpas[k] === "number"; }
-function isDean(k){ return hasGpa(k) && S.gpas[k] >= S.cutoff; }
-function termXp(k){ return hasGpa(k) ? Math.round(S.gpas[k]*100) + (isDean(k)?150:0) : 0; }
+// Two grading scales: "4" (4.0 is best) and "5" (1.0 is best, 5.0 fails). Points turn either one into 0-4 for XP.
+const GRADE_STEPS = {"4":[4,3.5,3,2.5,2,1.5,1,0], "5":[1,1.25,1.5,1.75,2,2.25,2.5,2.75,3,4,5]};
+const SCALE_DEFAULT_CUTOFF = {"4":3.5, "5":1.5};
+const SCALE_RANGE = {"4":[0,4], "5":[1,5]};
+function isFive(){ return S.scale === "5"; }
+function pointsOf(g){ return isFive() ? 5 - g : g; }
+function meetsCutoff(g){ return isFive() ? g <= S.cutoff + 1e-9 : g >= S.cutoff - 1e-9; }
+function termLabel(k){ const p = k.split("-"); return "Year " + p[0] + ", Term " + p[1]; }
+// A term saved from the calculator remembers its full Dean's List result (units and worst-grade rules too).
+function isDean(k){ if(!hasGpa(k)) return false; return k in S.deanFlags ? !!S.deanFlags[k] : meetsCutoff(S.gpas[k]); }
+function termXp(k){ return hasGpa(k) ? Math.round(pointsOf(S.gpas[k])*100) + (isDean(k)?150:0) : 0; }
 function totalXp(){
   let xp = 0;
   termKeys().forEach(k => xp += termXp(k));

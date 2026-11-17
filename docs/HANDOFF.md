@@ -27,18 +27,18 @@
 ## Plan agreed with Marjie (Nov 17)
 Audience: Filipino college students, not tied to one school. Build order:
 1. Install on phone (done, needs iPhone test).
-2. **Dean's List calculator tab** (4th tab): course list with units + grade, editable rules (cutoff, scale 4.0 or 1.0-5.0, min units, no grade below X), says if you made it or how close, can save result to a term.
+2. **Dean's List calculator tab** (DONE Nov 17). New tab "Dean's List" (#deans). Enter courses (name, units, grade), live GPA ring with count-up, rule checklist (GPA cutoff, min units, worst grade allowed), "so close" hints, XP preview, and "Save to term" which fills that term on the Journey (with its Dean's List flag). Rules sheet ("Edit rules", also in Settings/Setup): scale (4.0 or 1.0-5.0), cutoff, min units, worst grade. Switching scale converts saved GPAs with 5 minus the grade, so XP stays the same. Data: S.scale, S.minUnits, S.worst, S.deanFlags, S.calc. Code: js/views/deans.js; helpers in js/game.js (pointsOf, meetsCutoff, isDean, termLabel) and js/modals.js (ruleFields, readRules, openRules).
 3. **Customizable Journey:** program length + term names (Trimester/Semester/Term), map theme (Forest, Space, Candy, Beach), pet choice + name, own milestones (icon, color, XP), pet walks along the map to the next stop. Not now: confetti, drag-to-reorder.
 
 ## Next
 1. Marjie tries Add to Home Screen on her iPhone and says if it works.
-2. Build the Dean's List calculator, then the customizable Journey (small steps, commit after each).
+2. Build the customizable Journey (small steps, commit after each). Use termLabel(k) in js/game.js for term names.
 3. Run Lighthouse on the live site.
 
 ## Known bugs / notes
 - Data from the old artifact version doesn't carry over (different storage). Re-enter it once.
 - Data doesn't sync between laptop and phone yet (Phase 3).
-- The Dean's List cutoff default (3.50) is a placeholder. Set the real one from the Benilde handbook.
+- The Dean's List defaults (cutoff 3.50, min 12 units, no worst-grade limit) are placeholders. Each person sets their school's real rules. Grade lists are fixed steps (4.0 scale: 4.0 to 0.0 in halves; 1.0-5.0 scale: 1.0 to 3.0 in quarters, then 4.0, 5.0).
 - If the page looks unstyled or old after an update, hard-refresh (Ctrl+Shift+R) because the browser may be caching old CSS.
 - The installed home-screen app has its own storage, separate from Safari. Data entered in Safari does not appear in the installed app. A Backup / Restore button would fix this (not built).
 - Which view is showing (Map/Quests, Spending/Wishlist) isn't saved. It resets to Map/Spending on reload.

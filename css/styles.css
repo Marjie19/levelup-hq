@@ -239,3 +239,51 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 [hidden]{display:none!important}
 #view:focus{outline:none}
 .tip{margin:0;padding:10px 12px;border-radius:var(--r-sm);background:var(--plum-soft);color:var(--ink);font-size:.85rem}
+
+/* Dean's List calculator */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.calcgrid{display:grid;gap:14px}
+.result{display:grid;grid-template-columns:112px minmax(0,1fr);gap:12px 16px;align-items:center}
+.result>.rsave,.result>.rxp,.result>.rrules{grid-column:1/-1}
+.ringbox{position:relative;width:112px;height:112px}
+.ring{width:100%;height:100%}
+.rtrack{fill:none;stroke:var(--surface-2);stroke-width:12}
+.rfill{fill:none;stroke:var(--plum);stroke-width:12;stroke-linecap:round;transform:rotate(-90deg);transform-origin:70px 70px;transition:stroke-dashoffset .7s cubic-bezier(.3,1.2,.5,1),stroke .3s}
+.rtick{stroke:var(--accent);stroke-width:5;stroke-linecap:round}
+.result.pass .rfill{stroke:var(--good)}
+.rnum{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}
+.rnum b{font-family:var(--display);font-weight:600;font-size:1.7rem}
+.rnum span{font-size:.68rem;color:var(--muted);font-weight:700}
+.result.pop .ringbox{animation:popring .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes popring{40%{transform:scale(1.12) rotate(-4deg)}70%{transform:scale(.97) rotate(2deg)}}
+.rstatus{font-family:var(--display);font-weight:600;font-size:1.1rem;line-height:1.2}
+.result.pass .rstatus{color:var(--good)}
+.rstatus.swap{animation:swap .35s ease-out}
+@keyframes swap{from{opacity:0;transform:translateY(4px)}}
+.checks{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:4px;font-size:.84rem}
+.ck{display:grid;grid-template-columns:18px 1fr auto;gap:6px;align-items:baseline}
+.ckmark{font-weight:700}
+.ck.ok .ckmark{color:var(--good)}
+.ck.no .ckmark{color:var(--warn)}
+.ck b{font-weight:700}
+.rsave{display:flex;gap:10px;align-items:flex-end}
+.rsave .field{flex:1}
+.rxp{margin:-4px 0 0}
+.rrules{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.rrules .btn{margin-left:auto}
+.crow{display:grid;grid-template-columns:1fr 1fr 34px;grid-template-areas:"name name del" "units grade .";gap:8px;align-items:end;padding:10px;border:2px solid var(--line);border-radius:var(--r-sm);background:var(--surface)}
+.cname{grid-area:name}
+.cu{grid-area:units}
+.cg{grid-area:grade}
+.cdel{grid-area:del;align-self:center}
+.cfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+@media (min-width:900px){
+  .calcgrid{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:start}
+  .coursecard{grid-column:1;grid-row:1}
+  .result{grid-column:2;grid-row:1;position:sticky;top:20px;grid-template-columns:1fr;justify-items:center;text-align:center}
+  .result>*{width:100%}
+  .result>.ringbox{width:150px;height:150px}
+  .rnum b{font-size:2.2rem}
+  .checks{align-items:stretch;text-align:left}
+  .crow{grid-template-columns:1fr 90px 120px 34px;grid-template-areas:"name units grade del"}
+}

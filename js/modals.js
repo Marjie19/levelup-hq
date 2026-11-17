@@ -14,16 +14,16 @@ document.addEventListener("keydown", e => { if(e.key==="Escape" && S.setup) clos
 function openTerm(k){
   const [y,t] = k.split("-");
   const cur = hasGpa(k) ? S.gpas[k] : "";
-  modal('<h3>Year '+y+' · Term '+t+'</h3><p class="muted" style="margin:0">Enter your term GPA (0.00 to 4.00). Dean\'s List counts at '+S.cutoff.toFixed(2)+' and up.</p>' +
-    '<form id="termForm" class="sheetform"><div class="field"><label for="gpaIn">Term GPA</label><input class="inp num" id="gpaIn" type="number" inputmode="decimal" min="0" max="4" step="0.001" value="'+cur+'" required></div>' +
-    '<p id="gpaErr" class="muted" style="margin:0;color:var(--warn)" hidden>GPA must be between 0 and 4.</p>' +
+  modal('<h3>Year '+y+' · Term '+t+'</h3><p class="muted" style="margin:0">Enter your term GPA ('+SCALE_RANGE[S.scale][0].toFixed(2)+' to '+SCALE_RANGE[S.scale][1].toFixed(2)+'). Dean\'s List counts at '+S.cutoff.toFixed(2)+(isFive()?' or lower':' and up')+'.</p>' +
+    '<form id="termForm" class="sheetform"><div class="field"><label for="gpaIn">Term GPA</label><input class="inp num" id="gpaIn" type="number" inputmode="decimal" min="'+SCALE_RANGE[S.scale][0]+'" max="'+SCALE_RANGE[S.scale][1]+'" step="0.001" value="'+cur+'" required></div>' +
+    '<p id="gpaErr" class="muted" style="margin:0;color:var(--warn)" hidden>GPA must be between '+SCALE_RANGE[S.scale][0]+' and '+SCALE_RANGE[S.scale][1]+'.</p>' +
     '<div class="acts">'+(cur!==""?'<button type="button" class="btn ghost" id="clearTerm">Clear</button>':'')+'<button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
-      const c = m.querySelector("#clearTerm"); if(c) c.onclick = () => { delete S.gpas[k]; save(); closeModal(); renderAll(); };
+      const c = m.querySelector("#clearTerm"); if(c) c.onclick = () => { delete S.gpas[k]; delete S.deanFlags[k]; save(); closeModal(); renderAll(); };
       m.querySelector("#termForm").onsubmit = e => { e.preventDefault();
         const v = parseFloat(m.querySelector("#gpaIn").value);
-        if(isNaN(v) || v<0 || v>4){ m.querySelector("#gpaErr").hidden=false; return; }
-        const before = totalXp(); S.gpas[k] = Math.round(v*1000)/1000; save(); closeModal(); renderAll();
+        if(isNaN(v) || v<SCALE_RANGE[S.scale][0] || v>SCALE_RANGE[S.scale][1]){ m.querySelector("#gpaErr").hidden=false; return; }
+        const before = totalXp(); S.gpas[k] = Math.round(v*1000)/1000; delete S.deanFlags[k]; save(); closeModal(); renderAll();
         const gained = totalXp()-before; toast((isDean(k)?"Dean's List! ":"Term cleared! ") + (gained>0?"+"+gained+" XP":""));
       };
     });
@@ -61,16 +61,16 @@ function setupFields(first){
     '<div style="display:flex;gap:8px;flex-wrap:wrap"><div class="field"><label for="sYears">Years in program</label><input class="inp num" id="sYears" type="number" min="1" max="6" value="'+S.years+'"></div>' +
     '<div class="field"><label for="sTpy">Terms per year</label><input class="inp num" id="sTpy" type="number" min="1" max="4" value="'+S.tpy+'"></div>' +
     '<div class="field"><label for="sAge">Your age</label><input class="inp num" id="sAge" type="number" min="10" max="99" value="'+S.age+'"></div></div>' +
-    '<div class="field"><label for="sCut">Dean\'s List GPA cutoff</label><input class="inp num" id="sCut" type="number" min="0" max="4" step="0.01" value="'+S.cutoff+'"><span class="muted" style="font-size:.78rem">Check your student handbook and set the exact cutoff for your school.</span></div>';
+    ruleFields();
 }
 function readSetup(m){
   const n = v => parseFloat(m.querySelector(v).value);
   S.name = m.querySelector("#sName").value.trim();
-  const y = n("#sYears"), t = n("#sTpy"), a = n("#sAge"), c = n("#sCut");
+  const y = n("#sYears"), t = n("#sTpy"), a = n("#sAge");
   if(y>=1 && y<=6) S.years = Math.round(y);
   if(t>=1 && t<=4) S.tpy = Math.round(t);
   if(a>=10 && a<=99) S.age = Math.round(a);
-  if(c>=0 && c<=4) S.cutoff = c;
+  readRules(m);
 }
 function openSettings(){
   modal('<h3>Settings</h3><p class="hint" style="margin:0">Your data is saved on this device only.</p>' + installTip() + '<form id="setForm" class="sheetform">' + setupFields(false) +
@@ -128,4 +128,43 @@ function installTip(){
   const installed = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
   if(installed) return '<p class="tip">You are using the installed app. Your data lives in this app only.</p>';
   return '<p class="tip"><b>Install on your phone:</b> open this page in Safari, tap the Share button, then <b>Add to Home Screen</b>. The installed app keeps its own data, separate from Safari.</p>';
+}
+
+// Dean's List rule fields. Used by Setup, Settings and the rules sheet.
+function worstOptions(scale, selected){
+  const steps = GRADE_STEPS[scale];
+  return '<option value="">No limit</option>' + steps.map(g => '<option value="'+g+'"'+(selected===g?" selected":"")+'>'+(scale==="5"?g.toFixed(2):g.toFixed(1))+'</option>').join("");
+}
+function ruleFields(){
+  return '<div class="field"><label for="sScale">Grading scale</label><select class="inp" id="sScale">' +
+      '<option value="4"'+(isFive()?"":" selected")+'>4.0 scale (4.0 is the best)</option>' +
+      '<option value="5"'+(isFive()?" selected":"")+'>1.0 to 5.0 scale (1.0 is the best)</option></select></div>' +
+    '<div style="display:flex;gap:8px;flex-wrap:wrap"><div class="field"><label for="sCut">Dean\'s List GPA cutoff</label><input class="inp num" id="sCut" type="number" inputmode="decimal" step="0.01" min="'+SCALE_RANGE[S.scale][0]+'" max="'+SCALE_RANGE[S.scale][1]+'" value="'+S.cutoff+'"></div>' +
+    '<div class="field"><label for="sUnits">Minimum units</label><input class="inp num" id="sUnits" type="number" inputmode="decimal" min="0" max="40" step="0.5" value="'+S.minUnits+'"></div></div>' +
+    '<div class="field"><label for="sWorst">Worst grade allowed</label><select class="inp" id="sWorst">'+worstOptions(S.scale, S.worst)+'</select>' +
+    '<span class="muted" style="font-size:.78rem">Many schools drop you from the list if any grade is worse than this. Check your student handbook for the exact rules.</span></div>';
+}
+// Turns grades from one scale into the other (4.0 and 1.0 line up with 1.0 and 4.0, so it is 5 minus the grade)
+function convertScale(){
+  const flip = g => Math.round((5 - g)*1000)/1000;
+  Object.keys(S.gpas).forEach(k => { S.gpas[k] = flip(S.gpas[k]); });
+  S.calc.courses.forEach(c => { if(typeof c.grade === "number") c.grade = flip(c.grade); });
+}
+function readRules(m){
+  const num = v => parseFloat(m.querySelector(v).value);
+  const sc = m.querySelector("#sScale").value === "5" ? "5" : "4";
+  if(sc !== S.scale){ convertScale(); S.scale = sc; }
+  const c = num("#sCut");
+  if(c >= SCALE_RANGE[sc][0] && c <= SCALE_RANGE[sc][1]) S.cutoff = c;
+  const u = num("#sUnits");
+  if(u >= 0 && u <= 40) S.minUnits = Math.round(u*2)/2;
+  const w = m.querySelector("#sWorst").value;
+  S.worst = w === "" ? null : parseFloat(w);
+}
+function openRules(){
+  modal('<h3>Dean\'s List rules</h3><p class="muted" style="margin:0">Every school is different. Set yours here.</p><form id="rulesForm" class="sheetform">' + ruleFields() +
+    '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save rules</button></div></form>', m => {
+      m.querySelector("#cancel").onclick = closeModal;
+      m.querySelector("#rulesForm").onsubmit = e => { e.preventDefault(); readRules(m); save(); closeModal(); renderAll(); toast("Rules saved"); };
+    });
 }

@@ -7,7 +7,8 @@ const DEFAULT_GOALS = [
   ["Move into my own condo",24],["Build my dream house",28],["Hit ₱1M net worth",28]
 ];
 function fresh(){
-  return {v:1,setup:false,name:"",age:20,years:4,tpy:3,cutoff:3.5,gpas:{},quests:[],
+  return {v:1,setup:false,name:"",age:20,years:4,tpy:3,cutoff:3.5,scale:"4",minUnits:12,worst:null,gpas:{},deanFlags:{},quests:[],
+    calc:{term:"",courses:[1,2,3,4].map(()=>({id:uid8(),name:"",units:3,grade:null}))},
     goals:DEFAULT_GOALS.map(([title,age])=>({id:uid8(),title,age,done:false})),
     budget:3000,expenses:[],wishes:[],updated:0};
 }

@@ -17,6 +17,11 @@ document.addEventListener("click", e => {
   if(b.id === "addExpense") return openExpense();
   if(b.id === "addWish") return openWish();
   if(b.id === "editBudget") return openBudget();
+  if(b.id === "editRules") return openRules();
+  if(b.id === "addCourse") return addCourse();
+  if(b.id === "clearCalc") return clearCalc();
+  if(b.id === "saveTerm") return saveCalcToTerm();
+  if(b.dataset.cdel) return delCourse(b.dataset.cdel);
   if(b.dataset.qtoggle){ const q=S.quests.find(x=>x.id===b.dataset.qtoggle); q.done=!q.done; save(); renderAll(); if(q.done) toast("Quest complete! +"+(QUEST_XP[q.kind]||80)+" XP"); return; }
   if(b.dataset.qdel){ S.quests=S.quests.filter(x=>x.id!==b.dataset.qdel); save(); renderAll(); return; }
   if(b.dataset.edel){ S.expenses=S.expenses.filter(x=>x.id!==b.dataset.edel); save(); renderAll(); return; }
@@ -33,4 +38,26 @@ document.addEventListener("submit", e => {
   else if(f.id === "wishForm"){ e.preventDefault(); const n=$("#wName").value.trim(), p=parseFloat($("#wPrice").value); if(!n||!(p>0)) return; S.wishes.push({id:uid8(),name:n,price:p,saved:0}); save(); closeModal(); pane.money="wish"; renderAll(); toast("Added " + n + " to your wishlist"); }
   else if(f.dataset.wadd){ e.preventDefault(); const w=S.wishes.find(x=>x.id===f.dataset.wadd); const v=parseFloat(f.querySelector("input").value); if(!(v>0)) return;
     w.saved = Math.round((w.saved+v)*100)/100; save(); renderAll(); toast(w.saved>=w.price ? "You did it! Treat yourself +50 XP" : "Saved " + peso(v) + " toward " + w.name); }
+});
+
+// Calculator inputs update live without redrawing the page (so the keyboard stays open)
+document.addEventListener("input", e => {
+  const t = e.target, row = t.closest && t.closest("[data-cid]");
+  if(!t.dataset || !t.dataset.c || !row) return;
+  const c = S.calc.courses.find(x => x.id === row.dataset.cid); if(!c) return;
+  if(t.dataset.c === "name") c.name = t.value.slice(0,40);
+  else if(t.dataset.c === "units"){ const v = parseFloat(t.value); c.units = v >= 0 && v <= 40 ? v : 0; }
+  else if(t.dataset.c === "grade") c.grade = t.value === "" ? null : parseFloat(t.value);
+  save(); updateCalc();
+});
+document.addEventListener("change", e => {
+  const t = e.target;
+  if(t.id === "calcTerm"){ S.calc.term = t.value; save(); updateCalc(); }
+  // Picking a different scale in a sheet fills in sensible defaults for it
+  if(t.id === "sScale"){
+    const sc = t.value === "5" ? "5" : "4", m = t.closest("form");
+    m.querySelector("#sCut").value = SCALE_DEFAULT_CUTOFF[sc];
+    m.querySelector("#sCut").min = SCALE_RANGE[sc][0]; m.querySelector("#sCut").max = SCALE_RANGE[sc][1];
+    m.querySelector("#sWorst").innerHTML = worstOptions(sc, null);
+  }
 });
