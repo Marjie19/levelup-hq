@@ -19,11 +19,13 @@
 - Added `.claude/launch.json` (local server on port 5500 via `py -m http.server`) so Claude can preview the app with CSS loaded.
 - Git repo set up on branch `main` with the first commit. This project commits with the personal Gmail (set in this repo's git config only; other projects still use the Benilde email).
 - On GitHub (public): https://github.com/Marjie19/levelup-hq. GitHub CLI (`gh`) is installed and logged in as Marjie19.
+- **Live on GitHub Pages:** https://marjie19.github.io/levelup-hq/ (HTTPS forced). Every push to `main` updates it in about a minute.
+- Launch checklist pass: fixed dark-mode contrast (text on plum) and the light-mode green; added meta description, share tags, Pom favicon, skip link, cute 404 page, robots.txt and sitemap.xml. N/A: privacy/terms/cookie banner (no data collected; everything stays in the browser), server validation and spam protection (no server), analytics (skipped on purpose for privacy).
 
 ## Next
-1. Marjie checks the new layout on her iPhone and laptop and says what still feels off.
-2. Put it online with GitHub Pages so it opens on the iPhone from a link.
-3. Make it installable on the iPhone home screen.
+1. Marjie opens the live link on her iPhone and laptop and says what still feels off.
+2. Make it installable on the iPhone home screen (manifest + PNG icons). That also gives a share-preview image (og:image).
+3. Run Lighthouse on the live site.
 
 ## Known bugs / notes
 - Data from the old artifact version doesn't carry over (different storage). Re-enter it once.
