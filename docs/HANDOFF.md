@@ -20,6 +20,8 @@
 
 **If `git push` hangs** (it waits on a hidden Git Credential Manager login window), push with the GitHub CLI login: `git -c credential.helper= -c "credential.helper=!\"C:/Program Files/GitHub CLI/gh.exe\" auth git-credential" push origin <branch>`.
 
+**Backup safety (Nov 17):** restoring a backup runs `unsafeBackup()` in js/views/profile.js first (rejects `<` `>`, quotes in ids and keys, strings in number fields, `__proto__`, deep nesting). When you add new saved fields, add id-like names to ID_KEYS and number names to NUM_KEYS there.
+
 **Last updated:** Nov 17, 2026 (auto-build)
 
 ## Done

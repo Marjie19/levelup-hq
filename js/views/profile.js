@@ -73,6 +73,29 @@ function profileSave(){ save(); renderHeader(); }
 function profileMsg(t){ const m = $("#bkMsg"); if(m) m.textContent = t; toast(t); }
 
 // Turns old or partial saved data into the current shape (same steps as start-up)
+// A backup file can come from anyone, so it is checked before it touches the app.
+// Text typed by people (titles, notes) is fine and is always escaped when drawn, but ids, keys, short codes and
+// numbers must be plain, and no text may contain < or >. IF YOU ADD NEW SAVED FIELDS, add id-like ones to ID_KEYS
+// and number ones to NUM_KEYS so a bad backup cannot sneak code into the page.
+const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|m|a|s)$/;
+const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v)$/;
+function unsafeBackup(v, key, depth){
+  depth = depth || 0;
+  if(depth > 12) return true;
+  if(v === null || typeof v === "boolean") return false;
+  if(typeof v === "number") return !isFinite(v);
+  if(typeof v === "string"){
+    if(v.length > 6000000) return true;
+    if(/[<>]/.test(v) && !/^data:image\//.test(v)) return true;
+    if(key && NUM_KEYS.test(key)) return true;
+    if(key && ID_KEYS.test(key) && !/^[\w #.:\-]{0,32}$/.test(v)) return true;
+    return false;
+  }
+  if(Array.isArray(v)) return v.length > 5000 || v.some(x => unsafeBackup(x, key, depth + 1));
+  if(typeof v === "object") return Object.keys(v).some(k => k === "__proto__" || k === "constructor" || k === "prototype" || !/^[\w\- :.#]{1,40}$/.test(k) || unsafeBackup(v[k], k, depth + 1));
+  return true;
+}
+
 function restoreData(d){
   S = Object.assign(fresh(), d);
   if(!d.journey || !d.journey.stops) migrateJourney(d);
@@ -123,6 +146,7 @@ document.addEventListener("change", e => {
       try{
         const d = JSON.parse(r.result);
         if(!d || typeof d !== "object" || Array.isArray(d) || !("setup" in d || "journey" in d || "pets" in d)) throw 0;
+        if(unsafeBackup(d)){ profileMsg("That backup looks damaged or unsafe, so I did not load it"); return; }
         if(!confirm("Replace the data on this device with this backup?")) return;
         restoreData(d); save(); applyLook(); renderAll(); profileMsg("Backup restored");
       }catch(err){ profileMsg("That file is not a Bestie HQ backup"); }
