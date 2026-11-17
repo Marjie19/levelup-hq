@@ -22,9 +22,17 @@
 - **Live on GitHub Pages:** https://marjie19.github.io/levelup-hq/ (HTTPS forced). Every push to `main` updates it in about a minute.
 - Launch checklist pass: fixed dark-mode contrast (text on plum) and the light-mode green; added meta description, share tags, Pom favicon, skip link, cute 404 page, robots.txt and sitemap.xml. N/A: privacy/terms/cookie banner (no data collected; everything stays in the browser), server validation and spam protection (no server), analytics (skipped on purpose for privacy).
 
+- **Installable app (Nov 17):** manifest.webmanifest, sw.js (network-first, works offline), Pom icons in icons/ (made by a script, not in the repo), og:image share picture, iOS home-screen tags, and an install tip in Settings. Checked live: icons, manifest and service worker all load. NOT yet tested on a real iPhone.
+
+## Plan agreed with Marjie (Nov 17)
+Audience: Filipino college students, not tied to one school. Build order:
+1. Install on phone (done, needs iPhone test).
+2. **Dean's List calculator tab** (4th tab): course list with units + grade, editable rules (cutoff, scale 4.0 or 1.0-5.0, min units, no grade below X), says if you made it or how close, can save result to a term.
+3. **Customizable Journey:** program length + term names (Trimester/Semester/Term), map theme (Forest, Space, Candy, Beach), pet choice + name, own milestones (icon, color, XP), pet walks along the map to the next stop. Not now: confetti, drag-to-reorder.
+
 ## Next
-1. Marjie opens the live link on her iPhone and laptop and says what still feels off.
-2. Make it installable on the iPhone home screen (manifest + PNG icons). That also gives a share-preview image (og:image).
+1. Marjie tries Add to Home Screen on her iPhone and says if it works.
+2. Build the Dean's List calculator, then the customizable Journey (small steps, commit after each).
 3. Run Lighthouse on the live site.
 
 ## Known bugs / notes
@@ -32,4 +40,5 @@
 - Data doesn't sync between laptop and phone yet (Phase 3).
 - The Dean's List cutoff default (3.50) is a placeholder. Set the real one from the Benilde handbook.
 - If the page looks unstyled or old after an update, hard-refresh (Ctrl+Shift+R) because the browser may be caching old CSS.
+- The installed home-screen app has its own storage, separate from Safari. Data entered in Safari does not appear in the installed app. A Backup / Restore button would fix this (not built).
 - Which view is showing (Map/Quests, Spending/Wishlist) isn't saved. It resets to Map/Spending on reload.
