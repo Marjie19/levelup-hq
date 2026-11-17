@@ -26,7 +26,7 @@ Marjie's big wishlist (Nov 17, 2026) and the decisions she made. Work top to bot
 
 ## Phases to build
 - [x] **A. Companions replace XP.** (done Nov 17, live on main) Up to 3, person/animal/other, customize, care (feed, play, cuddle), Treats, growth stages, unlock 2nd and 3rd as you grow. Remove XP/level wording everywhere.
-- [ ] **B. Humanized look.** Scrapbook + storybook restyle, more animations, new nav (Home, Journey, Study, Money, School).
+- [x] **B. Humanized look.** (done Nov 17, live on main) Notebook paper + tape + sticky-note header + highlighter tabs + stamps, Gaegu/Nunito/Caveat fonts, tab settle animation, confetti, more motion. The new nav (Home, Journey, Study, Money, School) happens in phases E and F when Study and School exist. Still to polish later: companion room storybook scenes, more hand-drawn details.
 - [ ] **C. Welcome + short instructions.** First-open story welcome, a short tip on every screen (2 to 3 lines, dismissible, "?" to reopen).
 - [ ] **D. Starter side quests.** At least 5 ready-made, optional, editable and removable.
 - [ ] **E. School hub.** Planner (tasks, deadlines, class schedule), handbook (paste or upload text), allowed absences tracker, grading rules, projects hub (compile all projects and open easily).

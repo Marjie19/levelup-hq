@@ -93,7 +93,7 @@ function openMaker(mode, id){
           draft.id = uid8(); draft.g0 = growth(); draft.care = 0; draft.hunger = 85; draft.joy = 85; draft.t = Date.now();
           S.pets.push(draft); S.activePet = draft.id;
         } else Object.assign(S.pets.find(x => x.id === draft.id), draft);
-        save(); closeModal(); renderAll(); toast(mode === "new" ? name + " joined you!" : mode === "first" ? "Meet " + name + "!" : "Saved");
+        save(); closeModal(); renderAll(); if(mode === "new") confetti(null, 50); toast(mode === "new" ? name + " joined you!" : mode === "first" ? "Meet " + name + "!" : "Saved");
       };
       drawAll();
     });

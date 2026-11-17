@@ -5,7 +5,7 @@
 const CACHE = "levelup-hq-v3";
 const SHELL = [
   "./", "index.html", "css/styles.css", "favicon.svg", "manifest.webmanifest",
-  "js/templates.js", "js/state.js", "js/utils.js", "js/storage.js", "js/game.js", "js/pets.js",
+  "js/templates.js", "js/state.js", "js/utils.js", "js/fx.js", "js/storage.js", "js/game.js", "js/pets.js",
   "js/views/header.js", "js/views/home.js", "js/views/journey.js", "js/views/deans.js", "js/views/money.js", "js/views/planner.js",
   "js/petsheets.js", "js/journeyedit.js", "js/receipts.js", "js/modals.js", "js/events.js", "js/app.js",
   "icons/icon-192.png", "icons/icon-512.png", "icons/apple-touch-icon.png"

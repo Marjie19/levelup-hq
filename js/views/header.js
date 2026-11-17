@@ -21,7 +21,7 @@ function renderHeader(){
   // A companion grew up
   S.pets.forEach(x => {
     const id = stageOf(x).id;
-    if(lastStages[x.id] && lastStages[x.id] !== id) setTimeout(() => toast(x.name + " grew into a " + stageOf(x).label.toLowerCase() + "!"), 900);
+    if(lastStages[x.id] && lastStages[x.id] !== id) setTimeout(() => { toast(x.name + " grew into a " + stageOf(x).label.toLowerCase() + "!"); confetti($("#topPom"), 40); }, 900);
     lastStages[x.id] = id;
   });
 }

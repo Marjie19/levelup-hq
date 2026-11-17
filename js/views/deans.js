@@ -71,7 +71,7 @@ function updateCalc(first){
   $("#rfill").style.strokeDashoffset = (RING_C * (1 - (r.gpa === null ? 0 : fillOf(r.gpa)))).toFixed(2);
   const card = $("#result");
   card.classList.toggle("pass", r.pass);
-  if(r.pass && !calcWasPass && !first){ card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop"); }
+  if(r.pass && !calcWasPass && !first){ card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop"); confetti($(".ringbox")); }
   calcWasPass = r.pass;
 
   tweenNumber(gEl, r.shown, first);

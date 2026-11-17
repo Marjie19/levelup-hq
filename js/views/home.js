@@ -22,7 +22,7 @@ function renderHome(){
   const gift = S.lastGift !== today();
   const nextSlot = SLOT_AT[S.pets.length], g = growth();
   let html = '<section class="room room-'+S.room+'" id="room">' +
-    '<div class="roomtop"><span class="treatpill big" title="Treats">🍪 <b class="num" id="treatN">'+treats()+'</b></span>' + (gift ? '<button type="button" class="btn acc sm giftbtn" id="giftBtn">🎁 Daily gift</button>' : '') + '</div>' +
+    '<div class="roomtop"><span></span>' + (gift ? '<button type="button" class="btn acc sm giftbtn" id="giftBtn">🎁 Daily gift</button>' : '') + '</div>' +
     '<div class="bubble" id="bubble">'+esc(say(p))+'</div>' +
     '<button type="button" class="petstage" id="petBtn" aria-label="Cuddle '+esc(p.name)+'">'+petSvg(p,{cls:"big "+petFx})+'</button><div class="shadow"></div>' +
     '<div class="nameplate"><b>'+esc(p.name)+'</b><span id="plate">'+st.label+', '+MOOD_TEXT[mood]+'</span></div></section>';
@@ -43,7 +43,6 @@ function updateMeters(){
   const p = activePet(), s = petStats(p), h = $("#mHun"), j = $("#mJoy"); if(!h) return;
   h.style.width = s.hunger.toFixed(0) + "%"; j.style.width = s.joy.toFixed(0) + "%";
   $("#plate").textContent = stageOf(p).label + ", " + MOOD_TEXT[moodOf(p)];
-  $("#treatN").textContent = treats();
 }
 function cuddleTap(e){
   const p = activePet(); cuddle(p); save();
