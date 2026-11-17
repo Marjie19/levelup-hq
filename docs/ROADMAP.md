@@ -32,10 +32,12 @@ Marjie's big wishlist (Nov 17, 2026) and the decisions she made. Work top to bot
 - [ ] **E. School hub.** Planner (tasks, deadlines, class schedule), handbook (paste or upload text), allowed absences tracker, grading rules, projects hub (compile all projects and open easily).
 - [ ] **F. Study tools.** Focus mode (timer, keep screen on, companion studies with you), flashcards and quiz maker (flip, multiple choice, type answer, streaks), earns Treats.
 - [ ] **G. Helper chat ("Ask").** Chat that answers from the handbook and app knowledge. Optional real AI through a small server (worker file included, not deployed). API keys never go in the frontend.
+- [ ] **L. Login + sync (prerequisite for friends).** Sign up and log in so Marjie's laptop and phone share the same data, and so friends can be invited. Needs a backend (Supabase or Firebase). Marjie must create the project (free) and give the project URL and the public key; the app must use row-level security so people only see their own data. Add a short privacy note. Local-only use must keep working without an account.
+- [ ] **S. Friends and shared savings.** (1) Invite friends with a link; collaborate on shared things (shared goals, study groups, shared project boards). (2) A savings thingy: set a goal, save toward it alone or **with others**, everyone's progress in one place, nudges and cheers in the friend voice. The app only tracks pledges and progress. It never moves real money. Share only what each person chooses (goal progress, not their budget or expenses). Invite links expire and can be turned off. Needs phase L.
 - [ ] **H. Plot twist + extras.** The secret twist. More customizing (accent colors, light/dark, fonts, card style, companion rooms). More animations.
 
 ## Future (note only, do not build yet)
-- **Registration and login** so Marjie's laptop and phone share the same data (Supabase or Firebase). Needs a backend decision and privacy page.
+- (Registration, login and sync moved up into phase L above because friends and shared savings need them.)
 - **Sync with other apps**: Google Docs, Gmail, Google Calendar. Needs sign-in with Google (OAuth) and a server. Read-only first.
 - Backup and restore button (also moves data between Safari and the installed app).
 - Self-host the receipt reader files (about 10 MB) so it works offline.
