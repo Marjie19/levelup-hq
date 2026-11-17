@@ -7,10 +7,7 @@ function stopIndex(id){ return S.journey.stops.findIndex(s => s.id === id); }
 function nowStopId(){ const s = S.journey.stops.find(x => !stopDone(x)); return s ? s.id : null; }
 // Where the pet should stand: the first stop you have not finished, or the last stop if you finished everything.
 function petTargetId(){ const n = nowStopId(), st = S.journey.stops; return n || (st.length ? st[st.length-1].id : null); }
-function petHtml(){
-  const p = PETS.find(x => x.id === S.pet.type) || PETS[0];
-  return p.emoji ? '<span class="petemo avatar">'+p.emoji+'</span>' : pomFor("avatar");
-}
+function petHtml(){ return petSvg(activePet(), {cls:"avatar"}); }
 function journeyName(){
   const t = TEMPLATES.find(x => x.id === S.journey.tpl);
   return t ? (t.sub.length > 30 ? t.name : t.name + ", " + t.sub) : "My own journey";
@@ -34,7 +31,7 @@ function renderJourney(){
     if(s.kind === "term"){
       termN++;
       let st = "st-lock", inner = esc(s.short || "T"+termN), chip = "";
-      if(hasGpa(s.id)){ st = isDean(s.id) ? "st-dean" : "st-done"; inner = S.gpas[s.id].toFixed(2); chip = isDean(s.id) ? '<span class="chip dean">Dean\'s List</span>' : '<span class="chip ok">+' + termXp(s.id) + ' XP</span>'; }
+      if(hasGpa(s.id)){ st = isDean(s.id) ? "st-dean" : "st-done"; inner = S.gpas[s.id].toFixed(2); chip = isDean(s.id) ? '<span class="chip dean">Dean\'s List</span>' : '<span class="chip ok">' + tx(termXp(s.id)) + '</span>'; }
       else if(here){ st = "st-now"; chip = '<span class="chip now">You are here</span>'; }
       html += '<div class="stop">'+decor+'<button type="button" class="node '+st+'" style="--x:'+x+'%"'+sid+' data-term="'+esc(s.id)+'" aria-label="'+esc(s.label)+'">' +
         '<span class="dot num">'+inner+'</span><span class="cap">'+esc(s.label)+'</span>'+chip+'</button></div>';
@@ -43,7 +40,7 @@ function renderJourney(){
       html += '<div class="stop" style="height:136px">'+decor+'<button type="button" class="node st-grad" style="--x:50%"'+sid+' data-grad="1"><span class="dot">Grad</span><span class="cap">'+esc(s.label)+'</span>' +
         (allDone ? '<span class="chip ok">Unlocked!</span>' : '<span class="chip now">'+termsLeft+' terms to go</span>') + '</button></div>';
     } else {
-      const chip = s.done ? '<span class="chip ok">+'+(s.xp||0)+' XP</span>' : here ? '<span class="chip now">You are here</span>' : '<span class="chip">'+(s.xp||0)+' XP</span>';
+      const chip = s.done ? '<span class="chip ok">'+tx(s.xp||0)+'</span>' : here ? '<span class="chip now">You are here</span>' : '<span class="chip">'+tx(s.xp||0)+'</span>';
       html += '<div class="stop">'+decor+'<button type="button" class="node '+(s.done?"st-miledone":"st-mile")+'" style="--x:'+x+'%"'+sid+' data-mile="'+esc(s.id)+'" aria-label="'+esc(s.label)+'">' +
         '<span class="dot">'+(s.done ? "✓" : esc(s.icon || "⭐"))+'</span><span class="cap">'+esc(s.label)+'</span>'+chip+'</button></div>';
     }
@@ -52,19 +49,19 @@ function renderJourney(){
   const goals = S.goals.slice().sort((a,b)=>a.age-b.age);
   goals.forEach((g,j) => {
     const x = XS[(i+j) % XS.length];
-    html += '<div class="stop"><button type="button" class="node '+(g.done?"st-goaldone":"st-goal")+'" style="--x:'+x+'%" data-goal="'+g.id+'"><span class="dot num">'+(g.done?"✓":g.age)+'</span><span class="cap">'+esc(g.title)+'</span>'+(g.done?'<span class="chip ok">+200 XP</span>':'<span class="chip">by age '+g.age+'</span>')+'</button></div>';
+    html += '<div class="stop"><button type="button" class="node '+(g.done?"st-goaldone":"st-goal")+'" style="--x:'+x+'%" data-goal="'+g.id+'"><span class="dot num">'+(g.done?"✓":g.age)+'</span><span class="cap">'+esc(g.title)+'</span>'+(g.done?'<span class="chip ok">'+tx(200)+'</span>':'<span class="chip">by age '+g.age+'</span>')+'</button></div>';
   });
   html += '<button type="button" class="btn ghost addgoal" id="addGoal">+ Add a life goal</button><div class="pet" id="pet" aria-hidden="true">'+petHtml()+'</div></div></section>';
 
   // side quests
-  html += '<section class="card pane" data-pane-id="quests"><div class="cardhead"><h2>Side quests</h2><span class="headbtns"><button type="button" class="round" id="xpHelp" aria-label="How XP works">?</button><button type="button" class="btn acc sm" id="addQuest">+ Quest</button></span></div>';
+  html += '<section class="card pane" data-pane-id="quests"><div class="cardhead"><h2>Side quests</h2><span class="headbtns"><button type="button" class="round" id="xpHelp" aria-label="How treats work">?</button><button type="button" class="btn acc sm" id="addQuest">+ Quest</button></span></div>';
   if(!S.quests.length) html += '<div class="empty">'+pomFor("pom")+'<p>No side quests yet. Add the cert, hackathon or project you\'re working on to start earning XP.</p></div>';
   else {
     html += '<ul class="list">';
     S.quests.slice().sort((a,b)=>a.done-b.done).forEach(q => {
       html += '<li class="row'+(q.done?" done":"")+'"><button type="button" class="check" aria-pressed="'+q.done+'" data-qtoggle="'+q.id+'" aria-label="Mark done">'+(q.done?"✓":"")+'</button>' +
         '<div class="grow"><div class="t">'+esc(q.title)+'</div><div class="s">'+QUEST_LABEL[q.kind]+(q.done?", completed":", in progress")+'</div></div>' +
-        '<span class="pill xp">+'+(QUEST_XP[q.kind]||80)+' XP</span><button type="button" class="x" data-qdel="'+q.id+'" aria-label="Delete">×</button></li>';
+        '<span class="pill xp">'+tx(QUEST_XP[q.kind]||80)+'</span><button type="button" class="x" data-qdel="'+q.id+'" aria-label="Delete">×</button></li>';
     });
     html += '</ul>';
   }
@@ -117,7 +114,7 @@ function walkPet(fromId, toId){
   const arrive = () => {
     S.petAt = toId; save(); placePet();
     const s = S.journey.stops[stopIndex(toId)];
-    if(forward && s) toast(S.pet.name + " reached " + s.label + "!");
+    if(forward && s) toast(activePet().name + " reached " + s.label + "!");
   };
   const calm = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   if(!a || !b || calm || document.hidden) return arrive();

@@ -1,28 +1,29 @@
-/* Header: slim level bar, mascot, and the 3 stats (shown in Journey) */
+/* Header: your companion, how they feel, your Treats. Also the 3 stats shown in Journey. */
 "use strict";
 
-let prevXp = null;
-// The Pom naps between 10pm and 6am.
-function isNight(){ const h = new Date().getHours(); return h >= 22 || h < 6; }
-function pomFor(cls){ return pomSvg(cls + (isNight() ? " sleepy" : "")); }
+let prevGrowth = null, lastStages = {};
+function pomFor(cls){ return pomSvg(cls); }
 
 function renderHeader(){
+  const p = activePet(), st = stageOf(p), s = petStats(p), mood = moodOf(p), happy = Math.round((s.hunger + s.joy) / 2);
   $("#hi").textContent = "Hi, " + (S.name || "Player") + "!";
-  const xp = totalXp(), lvl = levelOf(xp), into = xp % PER_LEVEL;
-  $("#lvl").textContent = lvl;
-  $("#ltitle").textContent = titleOf(lvl);
-  $("#xpbar").style.width = (into/PER_LEVEL*100)+"%";
-  $("#xpbarWrap").setAttribute("aria-valuenow", into);
-  $("#xpline").textContent = into + " / " + PER_LEVEL + " XP to level " + (lvl+1);
-
-  $("#topPom").innerHTML = pomFor("pom");
-  if(!$("#brandPom").innerHTML) $("#brandPom").innerHTML = pomFor("pom");
-  // Little hop when you earn XP
-  if(prevXp !== null && xp > prevXp){ const p = $("#topPom"); p.classList.remove("hop"); void p.offsetWidth; p.classList.add("hop"); }
-  prevXp = xp;
-
-  if(prevLevel !== null && lvl > prevLevel) setTimeout(()=>toast("Level up! You're now Level " + lvl + " · " + titleOf(lvl)), 900);
-  prevLevel = lvl;
+  $("#stageLine").textContent = p.name + " · " + st.label;
+  $("#xpbar").style.width = happy + "%";
+  $("#xpbarWrap").setAttribute("aria-valuenow", happy);
+  $("#xpline").textContent = p.name + " is " + MOOD_TEXT[mood] + ".";
+  $("#treatPill").innerHTML = '🍪 <b class="num">' + treats() + '</b>';
+  $("#topPom").innerHTML = petSvg(p, {cls:"pom"});
+  $("#brandPom").innerHTML = petSvg(p, {cls:"pom"});
+  // Little hop when you earn something
+  const g = growth();
+  if(prevGrowth !== null && g > prevGrowth){ const el = $("#topPom"); el.classList.remove("hop"); void el.offsetWidth; el.classList.add("hop"); }
+  prevGrowth = g;
+  // A companion grew up
+  S.pets.forEach(x => {
+    const id = stageOf(x).id;
+    if(lastStages[x.id] && lastStages[x.id] !== id) setTimeout(() => { toast(x.name + " grew into a " + stageOf(x).label.toLowerCase() + "!"); confetti($("#topPom"), 40); }, 900);
+    lastStages[x.id] = id;
+  });
 }
 
 function statsHtml(){

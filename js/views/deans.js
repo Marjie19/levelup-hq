@@ -71,7 +71,7 @@ function updateCalc(first){
   $("#rfill").style.strokeDashoffset = (RING_C * (1 - (r.gpa === null ? 0 : fillOf(r.gpa)))).toFixed(2);
   const card = $("#result");
   card.classList.toggle("pass", r.pass);
-  if(r.pass && !calcWasPass && !first){ card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop"); }
+  if(r.pass && !calcWasPass && !first){ card.classList.remove("pop"); void card.offsetWidth; card.classList.add("pop"); confetti($(".ringbox")); }
   calcWasPass = r.pass;
 
   tweenNumber(gEl, r.shown, first);
@@ -91,7 +91,7 @@ function updateCalc(first){
   $("#rchecks").innerHTML = list;
 
   $("#ctotals").textContent = r.units + " units, " + S.calc.courses.length + (S.calc.courses.length === 1 ? " course" : " courses");
-  $("#rxp").textContent = r.shown === null ? "" : "Saving this term is worth +" + (Math.round(pointsOf(r.gpa)*100) + (r.pass ? 150 : 0)) + " XP";
+  $("#rxp").textContent = r.shown === null ? "" : "Saving this term earns you " + tx(Math.round(pointsOf(r.gpa)*100) + (r.pass ? 150 : 0));
   $("#saveTerm").disabled = r.shown === null;
 }
 
@@ -128,5 +128,5 @@ function saveCalcToTerm(){
   S.deanFlags[k] = r.pass;
   save(); renderAll();
   const gained = totalXp() - before;
-  toast("Saved to " + termLabel(k) + (r.pass ? ". Dean's List!" : ".") + (gained > 0 ? " +" + gained + " XP" : ""));
+  toast("Saved to " + termLabel(k) + (r.pass ? ". Dean's List!" : ".") + (gained > 0 ? " " + tx(gained) : ""));
 }

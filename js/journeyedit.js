@@ -14,7 +14,7 @@ function applyTemplate(id){
 }
 
 function openJourney(){
-  let pick = S.journey.tpl, theme = S.theme, pet = S.pet.type;
+  let pick = S.journey.tpl, theme = S.theme;
   const cards = TEMPLATES.concat([CUSTOM_CARD]);
   const cardHtml = c => {
     const n = c.id === "custom" ? (S.customStops || S.journey.stops).length : buildStops(c.id).length;
@@ -23,30 +23,20 @@ function openJourney(){
   };
   modal('<h3>Your journey</h3><p class="muted" style="margin:0">Pick a ready-made journey, or build your own. Your grades are kept either way.</p>' +
     '<div class="tplgrid" role="radiogroup" aria-label="Journey">' + cards.map(cardHtml).join("") + '</div>' +
-    '<h4 class="subh">Look</h4><div class="chips" role="radiogroup" aria-label="Map theme">' + THEMES.map(t => '<button type="button" class="chipbtn" data-theme="'+t.id+'" aria-pressed="'+(t.id===theme)+'">'+t.emoji+' '+t.name+'</button>').join("") + '</div>' +
-    '<h4 class="subh">Your pet</h4><div class="chips" role="radiogroup" aria-label="Pet">' + PETS.map(p => '<button type="button" class="chipbtn" data-pet="'+p.id+'" aria-pressed="'+(p.id===pet)+'">'+(p.emoji||"🐶")+' '+p.label+'</button>').join("") + '</div>' +
-    '<div class="field"><label for="petName">Pet name</label><input class="inp" id="petName" maxlength="14" value="'+esc(S.pet.name)+'"></div>' +
+    '<h4 class="subh">Map theme</h4><div class="chips" role="radiogroup" aria-label="Map theme">' + THEMES.map(t => '<button type="button" class="chipbtn" data-theme="'+t.id+'" aria-pressed="'+(t.id===theme)+'">'+t.emoji+' '+t.name+'</button>').join("") + '</div>' +
     '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button type="button" class="btn acc" id="saveJourney">Save</button></div>', m => {
       m.querySelector("#cancel").onclick = closeModal;
       m.querySelector(".sheet").addEventListener("click", e => {
         const b = e.target.closest("button"); if(!b) return;
         if(b.dataset.tpl){ pick = b.dataset.tpl; m.querySelectorAll("[data-tpl]").forEach(x => x.setAttribute("aria-checked", x.dataset.tpl === pick)); }
         if(b.dataset.theme){ theme = b.dataset.theme; m.querySelectorAll("[data-theme]").forEach(x => x.setAttribute("aria-pressed", x.dataset.theme === theme)); }
-        if(b.dataset.pet){
-          const oldDefault = (PETS.find(p => p.id === pet) || PETS[0]).name, input = m.querySelector("#petName");
-          pet = b.dataset.pet;
-          if(!input.value.trim() || input.value.trim() === oldDefault) input.value = (PETS.find(p => p.id === pet) || PETS[0]).name;
-          m.querySelectorAll("[data-pet]").forEach(x => x.setAttribute("aria-pressed", x.dataset.pet === pet));
-        }
       });
       m.querySelector("#saveJourney").onclick = () => {
         const changed = pick !== S.journey.tpl;
         if(changed) applyTemplate(pick);
-        S.theme = theme; S.pet.type = pet;
-        S.pet.name = m.querySelector("#petName").value.trim().slice(0,14) || (PETS.find(p => p.id === pet) || PETS[0]).name;
-        save(); closeModal();
+        S.theme = theme; save(); closeModal();
         if(pick === "custom" && changed){ renderAll(); openStopEditor(); return; }
-        renderAll(); toast(changed ? "Journey changed" : "Look saved");
+        renderAll(); toast(changed ? "Journey changed" : "Theme saved");
       };
     });
   if(S.journey.tpl === "custom"){
@@ -70,9 +60,9 @@ function openStopEditor(){
       '<select class="inp ekind" data-f="kind" aria-label="Stop '+(i+1)+' type">'+kindOpts(s.kind)+'</select>' +
       '<input class="inp egroup" data-f="group" maxlength="24" aria-label="Stop '+(i+1)+' section" placeholder="Section (like Year 1)" value="'+esc(s.group||"")+'">' +
       (s.kind === "mile" ? '<select class="inp eicon" data-f="icon" aria-label="Stop '+(i+1)+' icon">'+iconOpts(s.icon)+'</select>' +
-        '<label class="exp">XP <input class="inp num" data-f="xp" type="number" inputmode="numeric" min="0" max="1000" step="10" value="'+(s.xp==null?100:s.xp)+'"></label>' : '') +
+        '<label class="exp">Treats <input class="inp num" data-f="xp" type="number" inputmode="numeric" min="0" max="100" step="1" value="'+Math.round((s.xp==null?100:s.xp)/10)+'"></label>' : '') +
     '</li>').join("");
-  modal('<h3>Edit my journey</h3><p class="muted" style="margin:0">Add up to '+MAX_STOPS+' stops. Terms take a GPA. Milestones are things you tick off for XP.</p>' +
+  modal('<h3>Edit my journey</h3><p class="muted" style="margin:0">Add up to '+MAX_STOPS+' stops. Terms take a GPA. Milestones are things you tick off for treats.</p>' +
     '<p class="hint num" id="ecount"></p><ul class="elist" id="elist"></ul>' +
     '<div class="eadd"><button type="button" class="btn ghost sm" id="addTerm">+ Term</button><button type="button" class="btn ghost sm" id="addMile">+ Milestone</button></div>' +
     '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button type="button" class="btn acc" id="saveStops">Save journey</button></div>', m => {
@@ -102,7 +92,7 @@ function openStopEditor(){
       list.addEventListener("input", e => {
         const t = e.target, row = t.closest("[data-i]"); if(!row || !t.dataset.f) return;
         const s = draft[+row.dataset.i];
-        if(t.dataset.f === "xp"){ const v = parseFloat(t.value); s.xp = v >= 0 && v <= 1000 ? v : 0; }
+        if(t.dataset.f === "xp"){ const v = parseFloat(t.value); s.xp = v >= 0 && v <= 100 ? v * 10 : 0; }   // stored as growth points (10 per treat)
         else if(t.dataset.f === "kind"){
           s.kind = t.value;
           if(s.kind === "mile"){ s.icon = s.icon || "⭐"; if(s.xp == null) s.xp = 100; s.done = !!s.done; }
@@ -123,13 +113,13 @@ function openStopEditor(){
 function openMile(id){
   const s = S.journey.stops.find(x => x.id === id); if(!s) return;
   modal('<div style="display:flex;gap:12px;align-items:center"><span class="bigico" aria-hidden="true">'+esc(s.icon||"⭐")+'</span><h3>'+esc(s.label)+'</h3></div>' +
-    '<p class="muted" style="margin:0">Worth +'+(s.xp||0)+' XP when you finish it.</p>' +
+    '<p class="muted" style="margin:0">Finish it to earn '+tx(s.xp||0)+' treats.</p>' +
     '<form id="mileForm" class="sheetform"><label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="mDone" '+(s.done?"checked":"")+' style="width:22px;height:22px"> I did it!</label>' +
     '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
       m.querySelector("#mileForm").onsubmit = e => { e.preventDefault();
         const was = !!s.done; s.done = m.querySelector("#mDone").checked; save(); closeModal(); renderAll();
-        if(s.done && !was) toast(s.label + " done! +" + (s.xp||0) + " XP");
+        if(s.done && !was) toast(s.label + " done! " + tx(s.xp||0));
       };
     });
 }

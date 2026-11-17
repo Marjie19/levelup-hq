@@ -13,7 +13,15 @@ document.addEventListener("click", e => {
   if(b.dataset.grad) return toast(termKeys().every(hasGpa) ? "Congrats, graduate!" : "Clear every term to unlock graduation");
   if(b.id === "addGoal") return openGoal(null);
   if(b.id === "addQuest") return openQuest();
-  if(b.id === "xpHelp") return openXpHelp();
+  if(b.id === "xpHelp") return openTreatsHelp();
+  if(b.id === "petBtn") return cuddleTap(e);
+  if(b.id === "feedBtn") return openFeed();
+  if(b.id === "playBtn") return playTap();
+  if(b.id === "styleBtn") return openStyle();
+  if(b.id === "editPetBtn") return openMaker("edit", activePet().id);
+  if(b.id === "giftBtn") return claimGift();
+  if(b.id === "adopt") return openMaker("new");
+  if(b.dataset.pick){ S.activePet = b.dataset.pick; save(); renderAll(); return; }
   if(b.id === "addExpense") return openExpense();
   if(b.id === "addWish") return openWish();
   if(b.id === "editBudget") return openBudget();
@@ -24,7 +32,7 @@ document.addEventListener("click", e => {
   if(b.id === "clearCalc") return clearCalc();
   if(b.id === "saveTerm") return saveCalcToTerm();
   if(b.dataset.cdel) return delCourse(b.dataset.cdel);
-  if(b.dataset.qtoggle){ const q=S.quests.find(x=>x.id===b.dataset.qtoggle); q.done=!q.done; save(); renderAll(); if(q.done) toast("Quest complete! +"+(QUEST_XP[q.kind]||80)+" XP"); return; }
+  if(b.dataset.qtoggle){ const q=S.quests.find(x=>x.id===b.dataset.qtoggle); q.done=!q.done; save(); renderAll(); if(q.done) toast("Quest complete! "+tx(QUEST_XP[q.kind]||80)); return; }
   if(b.dataset.qdel){ S.quests=S.quests.filter(x=>x.id!==b.dataset.qdel); save(); renderAll(); return; }
   if(b.dataset.epic) return openReceipt(b.dataset.epic);
   if(b.dataset.edel){ const gone=S.expenses.find(x=>x.id===b.dataset.edel); if(gone && gone.pic) rcpt.del(gone.id).catch(()=>{}); S.expenses=S.expenses.filter(x=>x.id!==b.dataset.edel); save(); renderAll(); return; }
@@ -41,7 +49,7 @@ document.addEventListener("submit", e => {
     savePendingPic(eid); save(); closeModal(); pane.money="spend"; renderAll(); toast("Logged " + peso(a) + " for " + pickedCat); }
   else if(f.id === "wishForm"){ e.preventDefault(); const n=$("#wName").value.trim(), p=parseFloat($("#wPrice").value); if(!n||!(p>0)) return; S.wishes.push({id:uid8(),name:n,price:p,saved:0}); save(); closeModal(); pane.money="wish"; renderAll(); toast("Added " + n + " to your wishlist"); }
   else if(f.dataset.wadd){ e.preventDefault(); const w=S.wishes.find(x=>x.id===f.dataset.wadd); const v=parseFloat(f.querySelector("input").value); if(!(v>0)) return;
-    w.saved = Math.round((w.saved+v)*100)/100; save(); renderAll(); toast(w.saved>=w.price ? "You did it! Treat yourself +50 XP" : "Saved " + peso(v) + " toward " + w.name); }
+    w.saved = Math.round((w.saved+v)*100)/100; save(); renderAll(); toast(w.saved>=w.price ? "You did it! Treat yourself " + tx(50) : "Saved " + peso(v) + " toward " + w.name); }
 });
 
 // Calculator inputs update live without redrawing the page (so the keyboard stays open)

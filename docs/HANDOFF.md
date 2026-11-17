@@ -1,10 +1,9 @@
 # Handoff
 
-**Auto-build note (Nov 17, 2026, 7:05 PM):** work is on branch `auto-build`, not live until Marjie merges it into `main`.
+**App name: Bestie HQ** (renamed Nov 17 from LevelUp HQ; Marjie had no preference, so the recommended name was used). The repo, web link, localStorage key and cache names keep the old levelup-hq spelling on purpose so nothing breaks.
 
-**Auto-build paused on purpose.** Phase A (Companions replace XP) is already being built in the main project folder as uncommitted changes: `js/pets.js`, `js/petsheets.js`, `js/views/home.js` and edits to 13 other files, last saved Nov 17, 4:57 PM. Building Phase A again on this branch would make two different versions that clash when merged, and the later phases (B to H) all touch the same files. So the auto-build run built nothing. Next run: once the companion work is committed and pushed to `main` and Phase A is ticked in `docs/ROADMAP.md`, the auto-build will merge `origin/main` and continue with the first unticked phase.
+**If `git push` hangs** (it waits on a hidden Git Credential Manager login window), push with the GitHub CLI login: `git -c credential.helper= -c "credential.helper=!\"C:/Program Files/GitHub CLI/gh.exe\" auth git-credential" push origin <branch>`.
 
----
 **Last updated:** Nov 17, 2026
 
 ## Done
@@ -28,6 +27,9 @@
 - Launch checklist pass: fixed dark-mode contrast (text on plum) and the light-mode green; added meta description, share tags, Pom favicon, skip link, cute 404 page, robots.txt and sitemap.xml. N/A: privacy/terms/cookie banner (no data collected; everything stays in the browser), server validation and spam protection (no server), analytics (skipped on purpose for privacy).
 
 - **Installable app (Nov 17):** manifest.webmanifest, sw.js (network-first, works offline), Pom icons in icons/ (made by a script, not in the repo), og:image share picture, iOS home-screen tags, and an install tip in Settings. Checked live: icons, manifest and service worker all load. NOT yet tested on a real iPhone.
+
+- **Humanized look (Phase B, Nov 17).** Tokens at the top of css/styles.css (paper cream, ink brown, --note sticky yellow, --hl highlighter), fonts Gaegu (headings), Nunito (body), Caveat (--hand notes). The block at the END of css/styles.css ("Bestie look") restyles everything: paper cards with washi tape and tiny tilt, sticky-note header, highlighter on the open tab, dashed stamps, inked buttons. `#view.enter` settle animation only when the tab changes (app.js lastTab). js/fx.js has confetti(el,count) (Dean's List pass, companion grows up, new companion). `.note` and `.hand` classes are ready for tips and friend-voice text. Tab 'Dean's List' is now labeled 'Grades'.
+- **Companions replace XP (Phase A, Nov 17).** No XP or levels anywhere: `growth()` (old XP total) is hidden, and rewards show as Treats ("+12 🍪", tx(xp) = xp/10). New Home tab (#home) is the default screen: room, speech bubble, Feed / Play / Style / Edit, cuddle by tapping, daily gift (+5), 3 meters. Up to 3 companions (person, animal or other: 13 drawn species, colors, outfits, rooms), 2nd unlocks at growth 1000 and 3rd at 3000 (SLOT_AT). Stages Baby, Kid, Teen, Grown (STAGES). They never die: low fullness or joy just makes them sad. Code: js/pets.js, js/petsheets.js, js/views/home.js. Old saved pet (S.pet) migrates to the first companion. New data: S.pets, S.activePet, S.room, S.owned, S.treatsSpent, S.bonusTreats, S.studyTreats, S.lastGift. Treats = floor(growth/10) + bonus + study - spent. Setup now ends by opening the companion maker (mode "first").
 
 ## Plan agreed with Marjie (Nov 17)
 Audience: Filipino college students, not tied to one school. Build order:

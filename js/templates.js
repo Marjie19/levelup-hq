@@ -33,12 +33,4 @@ const THEMES = [
   {id:"candy", name:"Candy", emoji:"🍭", decor:["🍭","🧁","🍬"]},
   {id:"beach", name:"Beach", emoji:"🏖️", decor:["🐚","🌴","🌊"]}
 ];
-// "pom" uses the drawn Pomeranian. The others use an emoji.
-const PETS = [
-  {id:"pom", name:"Pom", label:"Pomeranian"},
-  {id:"cat", name:"Mochi", label:"Cat", emoji:"🐱"},
-  {id:"bunny", name:"Bun", label:"Bunny", emoji:"🐰"},
-  {id:"panda", name:"Bamboo", label:"Panda", emoji:"🐼"},
-  {id:"chick", name:"Chirp", label:"Chick", emoji:"🐥"}
-];
 const STOP_ICONS = ["⭐","🎓","📚","💼","🏆","📝","🏅","✈️","🧪","🩺","⚖️","🏗️","💻","🎨","❤️","🚀"];

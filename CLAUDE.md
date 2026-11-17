@@ -1,4 +1,4 @@
-# LevelUp HQ
+# Bestie HQ (the repo and web link are still named levelup-hq)
 
 My all-in-one student life app. It's a personal project and a portfolio piece for my resume, since I want to become a product manager.
 
@@ -29,13 +29,15 @@ js/templates.js     journey templates, themes, pets, icons (loaded before state.
 js/state.js         data shape (S) and defaults
 js/utils.js         helpers: $, esc, peso, today, toast
 js/storage.js       save/load (localStorage only for now)
-js/game.js          XP, levels, Dean's List rules
-js/views/*.js       one file per screen part: header, journey, deans (Dean's List calculator), money, planner
+js/game.js          growth, Dean's List rules (XP is gone: companions grow, you earn Treats)
+js/pets.js          companions: drawings, care, stages, Treats
+js/petsheets.js     companion sheets: make/edit, feed, style shop
+js/views/*.js       one file per screen part: header, home (companion room), journey, deans (Dean's List calculator), money, planner
 js/modals.js        pop-up sheets (term GPA, goals, setup, settings, budget)
 js/journeyedit.js   journey sheets: pick template, theme and pet, edit own stops, milestones
 js/receipts.js      receipt photos (saved in IndexedDB) and reading the total from them
 js/events.js        click and submit handlers
-js/app.js           tab routing (#journey, #money, #planner) and start-up
+js/app.js           tab routing (#home, #journey, #deans, #money, #planner) and start-up
 docs/ROADMAP.md     phases and feature ideas
 docs/HANDOFF.md     what's done, what's next, known bugs
 ```

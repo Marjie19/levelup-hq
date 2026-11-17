@@ -8,7 +8,9 @@ const DEFAULT_GOALS = [
 ];
 function fresh(){
   return {v:1,setup:false,name:"",age:20,years:4,tpy:3,cutoff:3.5,scale:"4",minUnits:12,worst:null,gpas:{},deanFlags:{},quests:[],
-    journey:{tpl:"tri4",stops:buildStops("tri4")},customStops:null,theme:"plain",pet:{type:"pom",name:"Pom"},petAt:null,
+    journey:{tpl:"tri4",stops:buildStops("tri4")},customStops:null,theme:"plain",petAt:null,
+    pets:[{id:uid8(),name:"Pom",species:"pom",m:"#f7a94f",a:"#d9772a",s:"#f3c9a1",acc:"none",hunger:80,joy:80,t:Date.now(),care:0,g0:0}],activePet:null,
+    room:"cozy",owned:{acc:["none"],room:["cozy"]},treatsSpent:0,bonusTreats:0,studyTreats:0,lastGift:"",
     calc:{term:"",courses:[1,2,3,4].map(()=>({id:uid8(),name:"",units:3,grade:null}))},
     goals:DEFAULT_GOALS.map(([title,age])=>({id:uid8(),title,age,done:false})),
     budget:3000,expenses:[],wishes:[],updated:0};
@@ -23,4 +25,11 @@ function migrateJourney(d){
   if(tpl === "custom") S.customStops = stops;
   S.journey = {tpl:tpl, stops:stops};
 }
-try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const d = JSON.parse(raw); S = Object.assign(fresh(), d); if(!d.journey || !d.journey.stops) migrateJourney(d); } }catch(e){}
+// Before companions, the app had one pet picked on the Journey sheet. It becomes the first companion.
+function migratePets(d){
+  const map = {pom:"pom", cat:"cat", bunny:"bunny", panda:"bear", chick:"pom"};
+  const old = d.pet || {type:"pom", name:"Pom"};
+  S.pets[0].species = map[old.type] || "pom";
+  S.pets[0].name = String(old.name || "Pom").slice(0,14);
+}
+try{ const raw = localStorage.getItem(LS_KEY); if(raw){ const d = JSON.parse(raw); S = Object.assign(fresh(), d); if(!d.journey || !d.journey.stops) migrateJourney(d); if(!d.pets) migratePets(d); } }catch(e){}
