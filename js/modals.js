@@ -1,9 +1,9 @@
 /* Pop-up sheets: term GPA, goals, setup, settings, budget */
 "use strict";
 
-function modal(html, onReady){
+function modal(html, onReady, cls){
   const m = $("#modal");
-  m.innerHTML = '<div class="scrim" id="scrim"><div class="sheet" role="dialog" aria-modal="true">'+html+'</div></div>';
+  m.innerHTML = '<div class="scrim" id="scrim"><div class="sheet'+(cls?" "+cls:"")+'" role="dialog" aria-modal="true">'+html+'</div></div>';
   m.querySelector("#scrim").addEventListener("click", e => { if(e.target.id==="scrim" && S.setup) closeModal(); });
   const f = m.querySelector("input,select,button"); if(f) f.focus();
   if(onReady) onReady(m);
@@ -14,7 +14,7 @@ document.addEventListener("keydown", e => { if(e.key==="Escape" && S.setup) clos
 function openTerm(k){
   const [y,t] = k.split("-");
   const cur = hasGpa(k) ? S.gpas[k] : "";
-  modal('<h3>Year '+y+' · Term '+t+'</h3><p class="muted" style="margin:0">Enter your term GPA ('+SCALE_RANGE[S.scale][0].toFixed(2)+' to '+SCALE_RANGE[S.scale][1].toFixed(2)+'). Dean\'s List counts at '+S.cutoff.toFixed(2)+(isFive()?' or lower':' and up')+'.</p>' +
+  modal('<h3>'+esc(termLabel(k))+'</h3><p class="muted" style="margin:0">Enter your term GPA ('+SCALE_RANGE[S.scale][0].toFixed(2)+' to '+SCALE_RANGE[S.scale][1].toFixed(2)+'). Dean\'s List counts at '+S.cutoff.toFixed(2)+(isFive()?' or lower':' and up')+'.</p>' +
     '<form id="termForm" class="sheetform"><div class="field"><label for="gpaIn">Term GPA</label><input class="inp num" id="gpaIn" type="number" inputmode="decimal" min="'+SCALE_RANGE[S.scale][0]+'" max="'+SCALE_RANGE[S.scale][1]+'" step="0.001" value="'+cur+'" required></div>' +
     '<p id="gpaErr" class="muted" style="margin:0;color:var(--warn)" hidden>GPA must be between '+SCALE_RANGE[S.scale][0]+' and '+SCALE_RANGE[S.scale][1]+'.</p>' +
     '<div class="acts">'+(cur!==""?'<button type="button" class="btn ghost" id="clearTerm">Clear</button>':'')+'<button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
@@ -57,19 +57,19 @@ function openSetup(){
     });
 }
 function setupFields(first){
+  const tpl = first
+    ? '<div class="field"><label for="sTpl">Your journey</label><select class="inp" id="sTpl">' + TEMPLATES.map(t => '<option value="'+t.id+'"'+(t.id===S.journey.tpl?" selected":"")+'>'+esc(t.name)+", "+esc(t.sub)+'</option>').join("") + '</select><span class="muted" style="font-size:.78rem">You can change it or build your own later, in the Journey tab.</span></div>'
+    : '<p class="hint" style="margin:0">To change your journey, theme or pet, tap Customize in the Journey tab.</p>';
   return '<div class="field"><label for="sName">What should we call you?</label><input class="inp" id="sName" maxlength="30" value="'+esc(S.name)+'" placeholder="Your name"></div>' +
-    '<div style="display:flex;gap:8px;flex-wrap:wrap"><div class="field"><label for="sYears">Years in program</label><input class="inp num" id="sYears" type="number" min="1" max="6" value="'+S.years+'"></div>' +
-    '<div class="field"><label for="sTpy">Terms per year</label><input class="inp num" id="sTpy" type="number" min="1" max="4" value="'+S.tpy+'"></div>' +
-    '<div class="field"><label for="sAge">Your age</label><input class="inp num" id="sAge" type="number" min="10" max="99" value="'+S.age+'"></div></div>' +
-    ruleFields();
+    '<div class="field"><label for="sAge">Your age</label><input class="inp num" id="sAge" type="number" min="10" max="99" value="'+S.age+'"></div>' +
+    tpl + ruleFields();
 }
 function readSetup(m){
   const n = v => parseFloat(m.querySelector(v).value);
   S.name = m.querySelector("#sName").value.trim();
-  const y = n("#sYears"), t = n("#sTpy"), a = n("#sAge");
-  if(y>=1 && y<=6) S.years = Math.round(y);
-  if(t>=1 && t<=4) S.tpy = Math.round(t);
+  const a = n("#sAge");
   if(a>=10 && a<=99) S.age = Math.round(a);
+  const t = m.querySelector("#sTpl"); if(t && t.value !== S.journey.tpl) applyTemplate(t.value);
   readRules(m);
 }
 function openSettings(){

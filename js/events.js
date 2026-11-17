@@ -17,6 +17,8 @@ document.addEventListener("click", e => {
   if(b.id === "addExpense") return openExpense();
   if(b.id === "addWish") return openWish();
   if(b.id === "editBudget") return openBudget();
+  if(b.dataset.mile) return openMile(b.dataset.mile);
+  if(b.id === "customizeJourney") return openJourney();
   if(b.id === "editRules") return openRules();
   if(b.id === "addCourse") return addCourse();
   if(b.id === "clearCalc") return clearCalc();

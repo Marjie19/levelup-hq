@@ -287,3 +287,40 @@ button{cursor:pointer;-webkit-tap-highlight-color:transparent}
   .checks{align-items:stretch;text-align:left}
   .crow{grid-template-columns:1fr 90px 120px 34px;grid-template-areas:"name units grade del"}
 }
+
+/* Journey: milestones, themes, pet, customize sheets */
+.st-mile .dot{border-radius:20px;border:3px solid var(--accent);background:var(--accent-soft);color:var(--accent-ink);font-size:1.5rem;box-shadow:0 4px 0 var(--accent)}
+.st-miledone .dot{border-radius:20px;border:3px solid var(--good);background:var(--good-soft);color:var(--good);box-shadow:0 4px 0 var(--good)}
+.map{border-radius:var(--r-sm)}
+.theme-forest{background:linear-gradient(180deg,rgba(46,155,98,.12),rgba(46,155,98,.03))}
+.theme-space{background:linear-gradient(180deg,rgba(80,50,170,.24),rgba(30,20,90,.08))}
+.theme-candy{background:linear-gradient(180deg,rgba(255,110,170,.16),rgba(255,190,120,.06))}
+.theme-beach{background:linear-gradient(180deg,rgba(80,190,230,.16),rgba(250,215,140,.16))}
+.decor{position:absolute;top:34px;font-size:1.5rem;opacity:.9;pointer-events:none;animation:sway 4.5s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes sway{50%{transform:translateY(-6px) rotate(6deg)}}
+.pet{position:absolute;left:0;top:0;width:40px;height:40px;z-index:2;pointer-events:none;will-change:transform}
+.pet .avatar{position:static;left:auto;top:auto}
+.petemo{display:grid;place-items:center;width:40px;height:40px;font-size:1.7rem;line-height:1;border-radius:50%;background:var(--surface);box-shadow:0 3px 0 var(--line)}
+.tplgrid{display:grid;gap:8px}
+.tpl{display:flex;gap:12px;align-items:center;text-align:left;width:100%;border:2px solid var(--line);background:var(--surface);border-radius:var(--r-sm);padding:10px 12px;box-shadow:0 3px 0 var(--line)}
+.tpl .emo{font-size:1.7rem;flex:none}
+.tplt{display:flex;flex-direction:column;line-height:1.25}
+.tplt span{font-size:.8rem;color:var(--muted)}
+.tpl[aria-checked="true"]{border-color:var(--plum);background:var(--plum-soft);box-shadow:0 3px 0 color-mix(in srgb,var(--plum) 45%,transparent)}
+.tpl:active{transform:translateY(2px)}
+.subh{margin:6px 0 -4px;font-family:var(--display);font-weight:600;font-size:1rem}
+.bigico{font-size:2rem;line-height:1}
+.sheet.wide{max-width:560px}
+.elist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.erow{display:grid;grid-template-columns:auto 1fr 1fr 34px;grid-template-areas:"mv label label del" "kind kind group group" "icon icon xp xp";gap:6px 8px;align-items:center;padding:10px;border:2px solid var(--line);border-radius:var(--r-sm);background:var(--bg)}
+.emove{grid-area:mv;display:flex;flex-direction:column;gap:2px}
+.emove button{width:28px;height:22px;border:2px solid var(--line);border-radius:8px;background:var(--surface);font-size:.8rem;line-height:1;padding:0}
+.emove button:disabled{opacity:.35}
+.elabel{grid-area:label}
+.erow .x{grid-area:del}
+.ekind{grid-area:kind}
+.egroup{grid-area:group}
+.eicon{grid-area:icon}
+.exp{grid-area:xp;display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--muted)}
+.erow .inp{padding:8px 10px}
+.eadd{display:flex;gap:8px}
