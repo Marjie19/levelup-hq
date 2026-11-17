@@ -2,6 +2,8 @@
 "use strict";
 
 $("#settingsBtn").onclick = openSettings;
+// Skip link: move focus to the content without changing the tab in the URL
+$(".skip").onclick = e => { e.preventDefault(); $("#view").focus(); };
 document.addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b) return;
   if(b.dataset.tab){ location.hash = b.dataset.tab; return; }

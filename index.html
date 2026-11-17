@@ -6,12 +6,19 @@
 <meta name="theme-color" content="#f5f2fb" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#140f20" media="(prefers-color-scheme: dark)">
 <title>LevelUp HQ</title>
+<meta name="description" content="A cute, game-like student life app. Track your road to graduation, side quests, budget and wishlist, with a Pomeranian buddy.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="LevelUp HQ">
+<meta property="og:description" content="A cute, game-like student life app. Track your road to graduation, side quests, budget and wishlist.">
+<meta property="og:url" content="https://marjie19.github.io/levelup-hq/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<a class="skip" href="#view">Skip to content</a>
 <!-- Mascot template. pomSvg() copies it. The "sleepy" class swaps open eyes for closed ones. -->
 <svg hidden aria-hidden="true">
   <svg class="pom" viewBox="0 0 48 48" aria-hidden="true" id="pomTpl">
@@ -61,7 +68,7 @@
       </button>
     </header>
 
-    <main id="view"></main>
+    <main id="view" tabindex="-1"></main>
   </div>
 </div>
 <div id="modal"></div>

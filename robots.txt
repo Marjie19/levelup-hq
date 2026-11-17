@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://marjie19.github.io/levelup-hq/sitemap.xml
