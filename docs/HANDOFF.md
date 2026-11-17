@@ -17,11 +17,12 @@
   - Pom moods: it sleeps (closed eyes) from 10pm to 6am, and hops when you earn XP.
   - Tested at 390px (light + dark) and 1280px. Adding a quest, adding an expense and the view switches all work, with no console errors.
 - Added `.claude/launch.json` (local server on port 5500 via `py -m http.server`) so Claude can preview the app with CSS loaded.
-- Git repo set up on branch `main` with the first commit. This project commits with the personal Gmail (set in this repo's git config only; other projects still use the Benilde email). Not on GitHub yet.
+- Git repo set up on branch `main` with the first commit. This project commits with the personal Gmail (set in this repo's git config only; other projects still use the Benilde email).
+- On GitHub (public): https://github.com/Marjie19/levelup-hq. GitHub CLI (`gh`) is installed and logged in as Marjie19.
 
 ## Next
 1. Marjie checks the new layout on her iPhone and laptop and says what still feels off.
-2. Create a GitHub repo on the personal account and push `main` to it.
+2. Put it online with GitHub Pages so it opens on the iPhone from a link.
 3. Make it installable on the iPhone home screen.
 
 ## Known bugs / notes
