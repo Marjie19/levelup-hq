@@ -516,3 +516,17 @@ h1,h2,h3,h4{font-weight:700;letter-spacing:.2px}
 /* confetti */
 .confetti{position:fixed;z-index:60;width:9px;height:14px;pointer-events:none;border-radius:2px;animation:confetti 1.2s cubic-bezier(.2,.7,.4,1) forwards}
 @keyframes confetti{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--rot))}}
+
+/* Money coach */
+.coachsay{margin:6px 0 10px;transform:rotate(-.6deg)}
+.note{color:var(--ink)}
+.coachsay.warn{background:color-mix(in srgb,var(--warn) 28%,var(--surface))}
+.streak{display:flex;gap:10px;align-items:center;padding:10px 12px;border:2px dashed color-mix(in srgb,var(--ink) 25%,transparent);border-radius:var(--r-sm);margin-top:10px}
+.streak .flame{font-size:1.6rem;animation:wig 2.4s ease-in-out infinite}
+.insights{margin:10px 0 0;padding-left:18px;font-size:.86rem;color:var(--muted)}
+.cat .of{color:var(--muted);font-weight:400}
+.cat{grid-template-columns:76px 1fr 112px}
+.jarform{display:flex;gap:6px;flex-wrap:wrap}
+.jarform .inp{flex:1;min-width:110px;padding:8px 10px}
+.jarform .btn{box-shadow:none;padding:8px 14px}
+@media (prefers-reduced-motion:reduce){.streak .flame{animation:none}}

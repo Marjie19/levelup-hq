@@ -1,10 +1,18 @@
 # Handoff
 
+**Auto-build note (Nov 17, 2026):** work is on branch `auto-build`, not live until Marjie merges it into `main`. Merge it when you like (it already includes everything from `main` up to Phase B).
+
+**Done on auto-build: Phase M, Money coach + real-friend voice.** Code in `js/coach.js` (new), `js/views/money.js`, `js/modals.js`, `js/events.js`, `js/state.js`. Voice rules in `docs/VOICE.md`. What it does: Tone setting (Gentle / Real talk / Savage roast, default Real talk) in Settings; per-category monthly limits and a daily cap (Limits button, warnings before and after you pass them, red bars); no-spend streak plus 3/5/7/14-day challenge that pays bonus treats; need-or-want chips on every expense with a nudge to wait 24h; Wait list (24h, then Still want it / Skip, skipping earns treats and counts toward the 'skipped' total); Savings jar with goal; insights (top category %, wants share, biggest day, month-end projection). Money's second tab is now 'Jar & wishes'. New data keys (all default safely for old saves): tone, catLimits, dayCap, challenge, streakFrom, waits, jar, jarGoal, skipped, and expense.kind. sw.js cache is v4 and lists coach.js. Tested at 390px and 1280px, light and dark, no app errors (the preview pane cannot register the service worker, so that one console line is the pane, not the app). Not yet applied: the friend voice on Home, Journey and Grades text (only the Money coach uses it so far).
+
+**Next on auto-build:** Phase N (Reminders), then P (Profile page), then C to H.
+
+---
+
 **App name: Bestie HQ** (renamed Nov 17 from LevelUp HQ; Marjie had no preference, so the recommended name was used). The repo, web link, localStorage key and cache names keep the old levelup-hq spelling on purpose so nothing breaks.
 
 **If `git push` hangs** (it waits on a hidden Git Credential Manager login window), push with the GitHub CLI login: `git -c credential.helper= -c "credential.helper=!\"C:/Program Files/GitHub CLI/gh.exe\" auth git-credential" push origin <branch>`.
 
-**Last updated:** Nov 17, 2026
+**Last updated:** Nov 17, 2026 (auto-build)
 
 ## Done
 - Phase 1 MVP built and tested at iPhone width (no console errors).

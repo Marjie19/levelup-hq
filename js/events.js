@@ -6,6 +6,7 @@ $("#settingsBtn").onclick = openSettings;
 $(".skip").onclick = e => { e.preventDefault(); $("#view").focus(); };
 document.addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b) return;
+  if(coachClick(b)) return;
   if(b.dataset.tab){ location.hash = b.dataset.tab; return; }
   if(b.dataset.pane){ const [g,k] = b.dataset.pane.split(":"); pane[g] = k; renderAll(); return; }
   if(b.dataset.term) return openTerm(b.dataset.term);
@@ -41,12 +42,14 @@ document.addEventListener("click", e => {
 });
 document.addEventListener("submit", e => {
   const f = e.target;
+  if(coachSubmit(f, e)) return;
   if(f.id === "questForm"){ e.preventDefault(); const t=$("#qTitle").value.trim(); if(!t) return; S.quests.push({id:uid8(),title:t,kind:$("#qKind").value,done:false}); save(); closeModal(); pane.journey="quests"; renderAll(); toast("New side quest added"); }
   else if(f.id === "expForm"){ e.preventDefault(); const a=parseFloat($("#eAmt").value); if(!(a>0)) return;
-    const eid=uid8();
-    S.expenses.push({id:eid,pic:!!pendingPic,amt:Math.round(a*100)/100,cat:pickedCat,note:$("#eNote").value.trim(),date:$("#eDate").value||today(),ts:Date.now()});
+    const eid=uid8(), before=monthSpent(), stBefore=streakDays();
+    const ex={id:eid,pic:!!pendingPic,amt:Math.round(a*100)/100,cat:pickedCat,kind:pickedKind,note:$("#eNote").value.trim(),date:$("#eDate").value||today(),ts:Date.now()};
+    S.expenses.push(ex);
     if(S.expenses.length>1500) S.expenses = S.expenses.slice(-1500);
-    savePendingPic(eid); save(); closeModal(); pane.money="spend"; renderAll(); toast("Logged " + peso(a) + " for " + pickedCat); }
+    savePendingPic(eid); save(); closeModal(); pane.money="spend"; renderAll(); toast(afterExpense(ex, before) || (stBefore>=2 && ex.date===today() ? say("noSpendBroke") : "Logged " + peso(a) + " for " + pickedCat)); }
   else if(f.id === "wishForm"){ e.preventDefault(); const n=$("#wName").value.trim(), p=parseFloat($("#wPrice").value); if(!n||!(p>0)) return; S.wishes.push({id:uid8(),name:n,price:p,saved:0}); save(); closeModal(); pane.money="wish"; renderAll(); toast("Added " + n + " to your wishlist"); }
   else if(f.dataset.wadd){ e.preventDefault(); const w=S.wishes.find(x=>x.id===f.dataset.wadd); const v=parseFloat(f.querySelector("input").value); if(!(v>0)) return;
     w.saved = Math.round((w.saved+v)*100)/100; save(); renderAll(); toast(w.saved>=w.price ? "You did it! Treat yourself " + tx(50) : "Saved " + peso(v) + " toward " + w.name); }

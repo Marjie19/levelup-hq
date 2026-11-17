@@ -62,6 +62,7 @@ function setupFields(first){
     : '<p class="hint" style="margin:0">To change your journey, theme or pet, tap Customize in the Journey tab.</p>';
   return '<div class="field"><label for="sName">What should we call you?</label><input class="inp" id="sName" maxlength="30" value="'+esc(S.name)+'" placeholder="Your name"></div>' +
     '<div class="field"><label for="sAge">Your age</label><input class="inp num" id="sAge" type="number" min="10" max="99" value="'+S.age+'"></div>' +
+    '<div class="field"><label for="sTone">How should I talk to you?</label><select class="inp" id="sTone">' + TONES.map(t => '<option value="'+t[0]+'"'+(S.tone===t[0]?" selected":"")+'>'+t[1]+'</option>').join("") + '</select><span class="muted" style="font-size:.78rem">Your money coach uses this voice.</span></div>' +
     tpl + ruleFields();
 }
 function readSetup(m){
@@ -70,6 +71,7 @@ function readSetup(m){
   const a = n("#sAge");
   if(a>=10 && a<=99) S.age = Math.round(a);
   const t = m.querySelector("#sTpl"); if(t && t.value !== S.journey.tpl) applyTemplate(t.value);
+  const tn = m.querySelector("#sTone"); if(tn && TONES.some(t => t[0] === tn.value)) S.tone = tn.value;
   readRules(m);
 }
 function openSettings(){
@@ -96,8 +98,11 @@ function openQuest(){
     });
 }
 function openExpense(){
+  pickedKind = "";
   modal('<h3>Add an expense</h3><form id="expForm" class="sheetform">' + snapHtml() +
     '<div class="chips" role="group" aria-label="Category">' + CATS.map(c=>'<button type="button" class="chipbtn" data-cat="'+c+'" aria-pressed="'+(c===pickedCat)+'">'+c+'</button>').join("") + '</div>' +
+    '<div class="chips" role="group" aria-label="Need or want"><span class="hint">Need or want?</span>' + [["need","Need"],["want","Want"]].map(k=>'<button type="button" class="chipbtn" data-kind="'+k[0]+'" aria-pressed="false">'+k[1]+'</button>').join("") + '</div>' +
+    '<p class="tip" id="wantHint" hidden><span></span> <button type="button" class="btn ghost sm" id="wantWait">Wait 24h instead</button></p>' +
     '<div class="field"><label for="eAmt">Amount (₱)</label><input class="inp num" id="eAmt" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="150" required></div>' +
     '<div class="field"><label for="eNote">What for?</label><input class="inp" id="eNote" maxlength="60" placeholder="Lunch at Taft"></div>' +
     '<div class="field"><label for="eDate">Date</label><input class="inp" id="eDate" type="date" value="'+today()+'" required></div>' +
