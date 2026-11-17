@@ -104,6 +104,9 @@ function loadTesseract(){
   return tessLoad || (tessLoad = new Promise((res, rej) => {
     const s = document.createElement("script");
     s.src = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
+    // The browser refuses the file if it ever differs from this fingerprint (protects against a tampered CDN copy).
+    s.integrity = "sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F";
+    s.crossOrigin = "anonymous";
     s.onload = res;
     s.onerror = () => { tessLoad = null; rej(new Error("reader failed to load")); };
     document.head.appendChild(s);
