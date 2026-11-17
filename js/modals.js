@@ -75,7 +75,7 @@ function readSetup(m){
   readRules(m);
 }
 function openSettings(){
-  modal('<h3>Settings</h3><p class="hint" style="margin:0">Your data is saved on this device only.</p>' + installTip() + '<form id="setForm" class="sheetform">' + setupFields(false) +
+  modal('<h3>Settings</h3><p class="hint" style="margin:0">Your data is saved on this device only.</p><button type="button" class="btn ghost" id="remindBtn" style="align-self:flex-start">🔔 Reminders</button>' + installTip() + '<form id="setForm" class="sheetform">' + setupFields(false) +
     '<div class="acts"><button type="button" class="btn ghost" id="reset" style="margin-right:auto;color:var(--warn)">Reset everything</button><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
       let armed = false;
