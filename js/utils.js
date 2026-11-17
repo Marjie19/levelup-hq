@@ -7,7 +7,7 @@ const peso = n => "₱" + (Math.round(n*100)/100).toLocaleString("en-PH",{minimu
 const today = () => { const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); };
 let toastT;
 function toast(msg){ const t=$("#toast"); t.textContent=msg; t.hidden=false; clearTimeout(toastT); toastT=setTimeout(()=>t.hidden=true,2600); }
-function pomSvg(cls){ const s=$("#pomTpl").cloneNode(true); s.removeAttribute("id"); s.setAttribute("class",cls); return s.outerHTML; }
+function pomSvg(cls){ return petSvg(activePet(), {cls:cls}); }
 
 // Which half of a tab is showing on phone (laptop shows both side by side)
 const pane = {journey:"map", money:"spend"};

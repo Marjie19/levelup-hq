@@ -1,10 +1,8 @@
-/* Game rules: XP, levels, Dean's List */
+/* Game rules: growth (what used to be XP), Dean's List. Companions turn growth into stages and Treats (see pets.js). */
 "use strict";
 
 const QUEST_XP = {cert:120, hackathon:150, project:100, org:80};
 const QUEST_LABEL = {cert:"Certificate", hackathon:"Hackathon", project:"Project", org:"Org / role"};
-const TITLES = ["Freshie","Explorer","Grinder","Achiever","Scholar","Trailblazer","Visionary","Legend"];
-const PER_LEVEL = 500;
 // A journey is a list of stops. Term stops hold a GPA (saved under the stop id). Milestones are ticked off. "grad" is the finish line.
 function termKeys(){ return S.journey.stops.filter(s => s.kind === "term").map(s => s.id); }
 function stopDone(s){ return s.kind === "term" ? hasGpa(s.id) : s.kind === "grad" ? termKeys().every(hasGpa) : !!s.done; }
@@ -29,6 +27,5 @@ function totalXp(){
   S.wishes.forEach(w => { if(w.saved >= w.price && w.price>0) xp += 50; });
   return xp;
 }
-function levelOf(xp){ return Math.floor(xp/PER_LEVEL)+1; }
-function titleOf(l){ return TITLES[Math.min(TITLES.length-1, Math.floor((l-1)/2))]; }
-let prevLevel = null;
+// Growth is the hidden number behind everything you do. Nobody sees it as XP any more: companions grow and you earn Treats.
+function growth(){ return totalXp(); }

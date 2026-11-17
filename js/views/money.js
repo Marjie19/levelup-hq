@@ -33,7 +33,7 @@ function renderMoney(){
   else { html += '<div class="stack">'; S.wishes.forEach(w => {
       const p = w.price>0 ? Math.min(100, w.saved/w.price*100) : 0, got = w.saved >= w.price && w.price>0;
       html += '<div class="wish'+(got?" got":"")+'"><div class="head"><b>'+esc(w.name)+'</b><button type="button" class="x" data-wdel="'+w.id+'" aria-label="Delete">×</button></div>' +
-        '<div class="num" style="font-size:.88rem">'+peso(w.saved)+' of '+peso(w.price)+(got?', <b style="color:var(--good)">goal reached! +50 XP</b>':', '+peso(w.price-w.saved)+' to go')+'</div>' +
+        '<div class="num" style="font-size:.88rem">'+peso(w.saved)+' of '+peso(w.price)+(got?', <b style="color:var(--good)">goal reached! '+tx(50)+'</b>':', '+peso(w.price-w.saved)+' to go')+'</div>' +
         '<div class="mbar" style="margin:2px 0"><i style="width:'+p+'%"></i></div>' +
         (got?'':'<form data-wadd="'+w.id+'"><input class="inp num" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="₱ saved today" aria-label="Amount saved for '+esc(w.name)+'" required><button class="btn" type="submit">Add</button></form>') + '</div>'; });
     html += '</div>'; }

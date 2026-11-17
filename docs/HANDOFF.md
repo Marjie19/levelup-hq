@@ -24,6 +24,8 @@
 
 - **Installable app (Nov 17):** manifest.webmanifest, sw.js (network-first, works offline), Pom icons in icons/ (made by a script, not in the repo), og:image share picture, iOS home-screen tags, and an install tip in Settings. Checked live: icons, manifest and service worker all load. NOT yet tested on a real iPhone.
 
+- **Companions replace XP (Phase A, Nov 17).** No XP or levels anywhere: `growth()` (old XP total) is hidden, and rewards show as Treats ("+12 🍪", tx(xp) = xp/10). New Home tab (#home) is the default screen: room, speech bubble, Feed / Play / Style / Edit, cuddle by tapping, daily gift (+5), 3 meters. Up to 3 companions (person, animal or other: 13 drawn species, colors, outfits, rooms), 2nd unlocks at growth 1000 and 3rd at 3000 (SLOT_AT). Stages Baby, Kid, Teen, Grown (STAGES). They never die: low fullness or joy just makes them sad. Code: js/pets.js, js/petsheets.js, js/views/home.js. Old saved pet (S.pet) migrates to the first companion. New data: S.pets, S.activePet, S.room, S.owned, S.treatsSpent, S.bonusTreats, S.studyTreats, S.lastGift. Treats = floor(growth/10) + bonus + study - spent. Setup now ends by opening the companion maker (mode "first").
+
 ## Plan agreed with Marjie (Nov 17)
 Audience: Filipino college students, not tied to one school. Build order:
 1. Install on phone (done, needs iPhone test).

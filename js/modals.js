@@ -24,7 +24,7 @@ function openTerm(k){
         const v = parseFloat(m.querySelector("#gpaIn").value);
         if(isNaN(v) || v<SCALE_RANGE[S.scale][0] || v>SCALE_RANGE[S.scale][1]){ m.querySelector("#gpaErr").hidden=false; return; }
         const before = totalXp(); S.gpas[k] = Math.round(v*1000)/1000; delete S.deanFlags[k]; save(); closeModal(); renderAll();
-        const gained = totalXp()-before; toast((isDean(k)?"Dean's List! ":"Term cleared! ") + (gained>0?"+"+gained+" XP":""));
+        const gained = totalXp()-before; toast((isDean(k)?"Dean's List! ":"Term cleared! ") + (gained>0?tx(gained):""));
       };
     });
 }
@@ -33,7 +33,7 @@ function openGoal(id){
   modal('<h3>'+(id?"Life goal":"New life goal")+'</h3><form id="goalForm" class="sheetform">' +
     '<div class="field"><label for="gTitle">Goal</label><input class="inp" id="gTitle" maxlength="70" value="'+esc(g.title)+'" required></div>' +
     '<div class="field"><label for="gAge">By what age?</label><input class="inp num" id="gAge" type="number" min="1" max="120" value="'+g.age+'" required></div>' +
-    (id?'<label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="gDone" '+(g.done?"checked":"")+' style="width:20px;height:20px"> Achieved it! (+200 XP)</label>':'') +
+    (id?'<label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="gDone" '+(g.done?"checked":"")+' style="width:20px;height:20px"> Achieved it! (+20 🍪)</label>':'') +
     '<div class="acts">'+(id?'<button type="button" class="btn ghost" id="gDel">Delete</button>':'')+'<button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Save</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
       const d = m.querySelector("#gDel"); if(d) d.onclick = () => { S.goals = S.goals.filter(x=>x.id!==id); save(); closeModal(); renderAll(); };
@@ -44,7 +44,7 @@ function openGoal(id){
         if(id){ g.title=title; g.age=age; g.done = m.querySelector("#gDone").checked; }
         else S.goals.push({id:uid8(),title,age,done:false});
         save(); closeModal(); renderAll();
-        if(id && g.done && !wasDone) toast("Life goal achieved! +200 XP");
+        if(id && g.done && !wasDone) toast("Life goal achieved! " + tx(200));
       };
     });
 }
@@ -53,7 +53,7 @@ function openSetup(){
     '<p class="muted" style="margin:0">Set up your journey. You can change all of this later in Settings.</p>' +
     '<form id="setupForm" class="sheetform">' + setupFields(true) +
     '<div class="acts"><button class="btn acc" type="submit">Start my journey</button></div></form>', m => {
-      m.querySelector("#setupForm").onsubmit = e => { e.preventDefault(); readSetup(m); S.setup = true; save(); closeModal(); renderAll(); toast("Let's go, " + (S.name||"Player") + "!"); };
+      m.querySelector("#setupForm").onsubmit = e => { e.preventDefault(); readSetup(m); S.setup = true; save(); closeModal(); renderAll(); openMaker("first"); };
     });
 }
 function setupFields(first){
@@ -90,7 +90,7 @@ function openBudget(){
 function openQuest(){
   modal('<h3>New side quest</h3><form id="questForm" class="sheetform">' +
     '<div class="field"><label for="qTitle">Quest</label><input class="inp" id="qTitle" maxlength="80" placeholder="e.g. Google Data Analytics cert" required></div>' +
-    '<div class="field"><label for="qKind">Type</label><select class="inp" id="qKind"><option value="cert">Certificate (+120 XP)</option><option value="hackathon">Hackathon (+150 XP)</option><option value="project">Project (+100 XP)</option><option value="org">Org / role (+80 XP)</option></select></div>' +
+    '<div class="field"><label for="qKind">Type</label><select class="inp" id="qKind"><option value="cert">Certificate (+12 🍪)</option><option value="hackathon">Hackathon (+15 🍪)</option><option value="project">Project (+10 🍪)</option><option value="org">Org / role (+8 🍪)</option></select></div>' +
     '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Add quest</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
     });
@@ -114,10 +114,10 @@ function openWish(){
       m.querySelector("#cancel").onclick = closeModal;
     });
 }
-function openXpHelp(){
-  modal('<div style="display:flex;gap:12px;align-items:center">'+pomFor("pom")+'<h3>How XP works</h3></div>' +
-    '<ul class="xplist"><li><b>Each term</b> gives GPA × 100 XP</li><li><b>Dean\'s List</b> adds +150</li><li><b>Side quests</b> give +80 to +150</li><li><b>Life goals</b> give +200</li><li><b>Wishlist goals</b> give +50</li></ul>' +
-    '<p class="muted" style="margin:0">Every '+PER_LEVEL+' XP is a new level.</p><div class="acts"><button type="button" class="btn acc" id="cancel">Got it</button></div>', m => {
+function openTreatsHelp(){
+  modal('<div style="display:flex;gap:12px;align-items:center">'+pomFor("pom")+'<h3>How treats work</h3></div>' +
+    '<ul class="xplist"><li>Log a term and you earn treats (better grades, more treats)</li><li>Dean\'s List gives a big bonus</li><li>Finish side quests, milestones and life goals</li><li>Open the app each day for a free gift</li></ul>' +
+    '<p class="muted" style="margin:0">Spend treats on food, outfits and rooms for your companions. They grow as you do.</p><div class="acts"><button type="button" class="btn acc" id="cancel">Got it</button></div>', m => {
       m.querySelector("#cancel").onclick = closeModal;
     });
 }
