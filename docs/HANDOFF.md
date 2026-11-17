@@ -24,6 +24,8 @@
 
 **FREE ONLY: Marjie decided nothing may cost money (see ROADMAP decisions).** Helper chat = free offline helper + optional bring-your-own free key. Login/friends/shared savings wait for Marjie's own free Supabase project.
 
+**School hub (Phase E, Nov 17).** js/views/school.js (new; planner.js deleted). Tabs are now Home, Journey, Money, School (#school; old #deans and #planner links still work). pane.school = grades|planner|absences|handbook|projects. New data: S.tasks, S.classes, S.courses (absence subjects), S.docs (handbook text, caps 300k per doc and 900k total), S.projects (links are checked by safeUrl: only http/https). Finished tasks (+20 growth, max 100) and done projects (+100, max 20) feed growth. The backup validator in profile.js knows the new fields (status, start, end, allowed, absent, day, url). Handbook helper (phase G) can reuse searchDocs() and findRules().
+
 **Last updated:** Nov 17, 2026 (auto-build)
 
 ## Done

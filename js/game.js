@@ -24,6 +24,7 @@ function totalXp(){
   S.journey.stops.forEach(s => { if(s.kind === "mile" && s.done) xp += s.xp || 0; });
   S.quests.forEach(q => { if(q.done) xp += QUEST_XP[q.kind]||80; });
   S.goals.forEach(g => { if(g.done) xp += 200; });
+  xp += Math.min(S.tasks.filter(t => t.done).length, 100) * 20 + Math.min(S.projects.filter(p => p.status === "done").length, 20) * 100;
   S.wishes.forEach(w => { if(w.saved >= w.price && w.price>0) xp += 50; });
   return xp;
 }

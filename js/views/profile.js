@@ -77,8 +77,8 @@ function profileMsg(t){ const m = $("#bkMsg"); if(m) m.textContent = t; toast(t)
 // Text typed by people (titles, notes) is fine and is always escaped when drawn, but ids, keys, short codes and
 // numbers must be plain, and no text may contain < or >. IF YOU ADD NEW SAVED FIELDS, add id-like ones to ID_KEYS
 // and number ones to NUM_KEYS so a bad backup cannot sneak code into the page.
-const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|m|a|s)$/;
-const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v)$/;
+const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|status|start|end|m|a|s)$/;
+const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v|allowed|absent|day)$/;
 function unsafeBackup(v, key, depth){
   depth = depth || 0;
   if(depth > 12) return true;
@@ -89,6 +89,7 @@ function unsafeBackup(v, key, depth){
     // Only the profile photo may hold an image, and only in the strict form below. Everywhere else, no < or >.
     if(key === "photo") return v !== "" && !/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(v);
     if(/[<>]/.test(v)) return true;
+    if(key === "url" && !/^https?:\/\/[^\s<>"'`]{1,500}$/.test(v)) return true;   // project links must be plain web addresses
     if(key && NUM_KEYS.test(key)) return true;
     if(key && ID_KEYS.test(key) && !/^[\w #.:\-]{0,32}$/.test(v)) return true;
     return false;
