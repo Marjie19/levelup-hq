@@ -96,15 +96,14 @@ function openQuest(){
     });
 }
 function openExpense(){
-  modal('<h3>Add an expense</h3><form id="expForm" class="sheetform">' +
+  modal('<h3>Add an expense</h3><form id="expForm" class="sheetform">' + snapHtml() +
     '<div class="chips" role="group" aria-label="Category">' + CATS.map(c=>'<button type="button" class="chipbtn" data-cat="'+c+'" aria-pressed="'+(c===pickedCat)+'">'+c+'</button>').join("") + '</div>' +
     '<div class="field"><label for="eAmt">Amount (₱)</label><input class="inp num" id="eAmt" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="150" required></div>' +
     '<div class="field"><label for="eNote">What for?</label><input class="inp" id="eNote" maxlength="60" placeholder="Lunch at Taft"></div>' +
     '<div class="field"><label for="eDate">Date</label><input class="inp" id="eDate" type="date" value="'+today()+'" required></div>' +
-    '<p class="hint" style="margin:0">Coming in Phase 2: snap a receipt and this fills itself in.</p>' +
     '<div class="acts"><button type="button" class="btn ghost" id="cancel">Cancel</button><button class="btn acc" type="submit">Add expense</button></div></form>', m => {
       m.querySelector("#cancel").onclick = closeModal;
-      m.querySelector("#eAmt").focus();
+      wireSnap(m);
     });
 }
 function openWish(){

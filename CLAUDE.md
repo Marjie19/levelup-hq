@@ -18,18 +18,22 @@ My all-in-one student life app. It's a personal project and a portfolio piece fo
 ## Tech (for now)
 - Plain HTML, CSS and JavaScript, with no build step. Open `index.html` in a browser to run it.
 - Scripts are classic `<script>` tags loaded in order (see `index.html`), and they share global variables.
-- Data is saved in the browser's `localStorage` (key `levelup-hq-v1`). There's no login or cloud sync yet.
+- Data is saved in the browser's `localStorage` (key `levelup-hq-v1`). Receipt photos are saved in IndexedDB. There's no login or cloud sync yet.
+- It's an installable app (manifest.webmanifest + sw.js). Live at https://marjie19.github.io/levelup-hq/ (GitHub Pages, updates on every push to `main`).
 
 ## Folder map
 ```
 index.html          page skeleton and script order
 css/styles.css      all styles; color and font tokens are at the top (light + dark)
+js/templates.js     journey templates, themes, pets, icons (loaded before state.js)
 js/state.js         data shape (S) and defaults
 js/utils.js         helpers: $, esc, peso, today, toast
 js/storage.js       save/load (localStorage only for now)
 js/game.js          XP, levels, Dean's List rules
-js/views/*.js       one file per screen part: header, journey, money, planner
+js/views/*.js       one file per screen part: header, journey, deans (Dean's List calculator), money, planner
 js/modals.js        pop-up sheets (term GPA, goals, setup, settings, budget)
+js/journeyedit.js   journey sheets: pick template, theme and pet, edit own stops, milestones
+js/receipts.js      receipt photos (saved in IndexedDB) and reading the total from them
 js/events.js        click and submit handlers
 js/app.js           tab routing (#journey, #money, #planner) and start-up
 docs/ROADMAP.md     phases and feature ideas

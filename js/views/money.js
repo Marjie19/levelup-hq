@@ -23,7 +23,7 @@ function renderMoney(){
   html += '<section class="card"><div class="cardhead"><h2>This month</h2><span class="hint num">'+mine.length+(mine.length===1?' entry':' entries')+'</span></div>';
   if(!mine.length) html += '<div class="empty">'+pomFor("pom")+'<p>Nothing logged yet this month. Tap <b>+ Expense</b> to add your first one.</p></div>';
   else { html += '<ul class="list">'; mine.slice(0,30).forEach(e => {
-      html += '<li class="row"><span class="catdot c-'+e.cat.toLowerCase()+'" aria-hidden="true">'+e.cat[0]+'</span><div class="grow"><div class="t">'+esc(e.note||e.cat)+'</div><div class="s">'+e.cat+', '+new Date(e.date+"T00:00").toLocaleDateString("en-PH",{month:"short",day:"numeric"})+'</div></div><b class="num">'+peso(e.amt)+'</b><button type="button" class="x" data-edel="'+e.id+'" aria-label="Delete">×</button></li>'; });
+      html += '<li class="row"><span class="catdot c-'+e.cat.toLowerCase()+'" aria-hidden="true">'+e.cat[0]+'</span><div class="grow"><div class="t">'+esc(e.note||e.cat)+'</div><div class="s">'+e.cat+', '+new Date(e.date+"T00:00").toLocaleDateString("en-PH",{month:"short",day:"numeric"})+'</div></div><b class="num">'+peso(e.amt)+'</b>'+(e.pic?'<button type="button" class="x pic" data-epic="'+e.id+'" aria-label="View receipt photo">📷</button>':'')+'<button type="button" class="x" data-edel="'+e.id+'" aria-label="Delete">×</button></li>'; });
     html += '</ul>'; }
   html += '</section></div>';
 

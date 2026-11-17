@@ -28,8 +28,9 @@
 Audience: Filipino college students, not tied to one school. Build order:
 1. Install on phone (done, needs iPhone test).
 2. **Dean's List calculator tab** (DONE Nov 17). New tab "Dean's List" (#deans). Enter courses (name, units, grade), live GPA ring with count-up, rule checklist (GPA cutoff, min units, worst grade allowed), "so close" hints, XP preview, and "Save to term" which fills that term on the Journey (with its Dean's List flag). Rules sheet ("Edit rules", also in Settings/Setup): scale (4.0 or 1.0-5.0), cutoff, min units, worst grade. Switching scale converts saved GPAs with 5 minus the grade, so XP stays the same. Data: S.scale, S.minUnits, S.worst, S.deanFlags, S.calc. Code: js/views/deans.js; helpers in js/game.js (pointsOf, meetsCutoff, isDean, termLabel) and js/modals.js (ruleFields, readRules, openRules).
-3. **Journey templates (WAITING for Marjie to say "build it").** Marjie wants: several ready-made Journey templates the user picks from, plus one fully custom Journey they edit themselves. Combine with the earlier ideas below (term names, map theme, pet + name, own milestones, pet walks to the next stop). Not decided yet: which templates, and what a template contains (stops, theme, pet). Ask or grill before building.
-   Earlier idea list, **Customizable Journey:** program length + term names (Trimester/Semester/Term), map theme (Forest, Space, Candy, Beach), pet choice + name, own milestones (icon, color, XP), pet walks along the map to the next stop. Not now: confetti, drag-to-reorder.
+3. **Journey templates + custom journey (DONE Nov 17).** Journey is now a list of stops (S.journey = {tpl, stops}). Stop kinds: "term" (log a GPA, stored under the stop id), "mile" (tick off for XP), "grad" (finish line, auto). Templates (js/templates.js): College 2 semesters, College 3 trimesters, 5-year + board exam, Senior High. "My own journey" editor (js/journeyedit.js): add, remove, reorder, rename, icon, XP, section; max 30 stops (MAX_STOPS). Switching templates never deletes GPAs; the custom stops are kept in S.customStops so you can switch back. Old saved data (years + terms per year) migrates automatically (migrateJourney in js/state.js). Also built: map themes (Plain, Forest, Space, Candy, Beach), pet choice + name (Pom drawing or emoji pets), and the pet walks along the trail to the next stop when you finish one (S.petAt remembers where it stood). Not built: confetti, drag-to-reorder.
+   Marjie's words: "up to 30" was read as max 30 stops in the custom journey. Ask her if she meant something else.
+4. **Receipt photo in Money (DONE Nov 17).** "Add an expense" has Take photo / Choose photo. The photo is resized, saved in IndexedDB (js/receipts.js) and linked to the expense (e.pic). The reader (Tesseract.js 5.1.1 from jsDelivr, loads on first use, needs internet that first time) fills the amount, date, store name and category. It is a guess: the sheet says "check it before saving". Tap the camera icon on an expense to view or delete the photo. Photos are on this device only (not in any backup, none exists yet).
 
 ## Master build list (Marjie, Nov 17). When she says "build it", build ALL of these, in small steps, grill-me first
 1. **Journey templates + one fully custom journey** (see item 3 above).
@@ -42,8 +43,8 @@ Risks to settle before building:
 - Data is per device (no login or sync yet), so projects and handbook would not move between phone and laptop until Phase 3.
 
 ## Next
-1. Marjie tries Add to Home Screen on her iPhone and says if it works. Also test the Dean's List tab on the phone.
-2. Journey templates + custom journey: wait for Marjie's go, then grill-me on the templates, then build in small steps. Use termLabel(k) in js/game.js for term names.
+1. Marjie tries the live app on her iPhone (Add to Home Screen, Dean's List tab, Journey templates, receipt photo with the real camera) and says what feels off.
+2. Still on the master list, waiting for Marjie's go: projects hub, AI helper, handbook + school rules (see the master build list).
 3. Run Lighthouse on the live site.
 
 ## Known bugs / notes
