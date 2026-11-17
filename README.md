@@ -1,4 +1,4 @@
-# LevelUp HQ 🐶
+# Bestie HQ 🐶
 
 A game-style student life app: level up your grades, certs and life goals, and track your money and wishlist.
 

@@ -1,4 +1,4 @@
-# LevelUp HQ
+# Bestie HQ (the repo and web link are still named levelup-hq)
 
 My all-in-one student life app. It's a personal project and a portfolio piece for my resume, since I want to become a product manager.
 

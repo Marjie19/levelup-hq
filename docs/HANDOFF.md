@@ -1,5 +1,9 @@
 # Handoff
 
+**App name: Bestie HQ** (renamed Nov 17 from LevelUp HQ; Marjie had no preference, so the recommended name was used). The repo, web link, localStorage key and cache names keep the old levelup-hq spelling on purpose so nothing breaks.
+
+**If `git push` hangs** (it waits on a hidden Git Credential Manager login window), push with the GitHub CLI login: `git -c credential.helper= -c "credential.helper=!\"C:/Program Files/GitHub CLI/gh.exe\" auth git-credential" push origin <branch>`.
+
 **Last updated:** Nov 17, 2026
 
 ## Done

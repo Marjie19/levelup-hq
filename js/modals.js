@@ -49,7 +49,7 @@ function openGoal(id){
     });
 }
 function openSetup(){
-  modal('<div style="display:flex;gap:12px;align-items:center">'+pomFor("pom")+'<h3>Welcome to LevelUp HQ</h3></div>' +
+  modal('<div style="display:flex;gap:12px;align-items:center">'+pomFor("pom")+'<h3>Welcome to Bestie HQ</h3></div>' +
     '<p class="muted" style="margin:0">Set up your journey. You can change all of this later in Settings.</p>' +
     '<form id="setupForm" class="sheetform">' + setupFields(true) +
     '<div class="acts"><button class="btn acc" type="submit">Start my journey</button></div></form>', m => {
