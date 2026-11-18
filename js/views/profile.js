@@ -60,6 +60,7 @@ function renderProfile(){
       '<div class="field"><label for="pTone">How should I talk to you?</label><select class="inp" id="pTone">' + TONES.map(t => '<option value="'+t[0]+'"'+(S.tone===t[0]?" selected":"")+'>'+t[1]+'</option>').join("") + '</select></div>' +
       '<button type="button" class="btn ghost" id="remindBtn" style="align-self:flex-start">🔔 Reminders</button></div></section>' +
 
+    askKeyCard() +
     '<section class="card"><div class="cardhead"><h2>Backup &amp; restore</h2></div><div class="sheetform">' +
       '<p class="hint" style="margin:0">Your data lives only on this device. Save a backup file to move it between Safari, the installed app and your laptop. Receipt photos are not in the backup.</p>' +
       '<div class="acts" style="justify-content:flex-start"><button type="button" class="btn acc" id="bkSave">⬇ Save backup</button><label class="btn ghost" for="bkFile" style="cursor:pointer">⬆ Restore backup</label><input id="bkFile" type="file" accept=".json,application/json" hidden></div>' +
