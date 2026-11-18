@@ -24,7 +24,8 @@ const ACCS = [
 ];
 const ROOMS = [
   {id:"cozy", name:"Cozy room", emoji:"🛋️", cost:0}, {id:"garden", name:"Garden", emoji:"🌳", cost:20}, {id:"beach", name:"Beach", emoji:"🏖️", cost:25},
-  {id:"library", name:"Library", emoji:"📚", cost:25}, {id:"space", name:"Space", emoji:"🪐", cost:30}
+  {id:"library", name:"Library", emoji:"📚", cost:25}, {id:"space", name:"Space", emoji:"🪐", cost:30},
+  {id:"sakura", name:"Sakura", emoji:"🌸", cost:30}, {id:"cafe", name:"Cafe", emoji:"☕", cost:30}
 ];
 // A companion grows with everything you do (grades, quests, care). Growth points decide the stage.
 const STAGES = [{id:"baby", label:"Baby", at:0, scale:.72}, {id:"kid", label:"Kid", at:250, scale:.84}, {id:"teen", label:"Teen", at:800, scale:.94}, {id:"grown", label:"Grown", at:1800, scale:1}];

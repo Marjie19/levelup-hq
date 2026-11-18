@@ -36,6 +36,7 @@ function renderHome(){
   html += '<section class="card"><div class="cardhead"><h2>Your companions</h2><span class="hint num">'+S.pets.length+' of '+MAX_PETS+'</span></div><div class="slots">' + [0,1,2].map(slotHtml).join("") + '</div>' +
     (nextSlot !== undefined && g < nextSlot ? '<p class="hint" style="margin:10px 0 0">Next friend arrives as you grow: '+Math.round(g/nextSlot*100)+'% there. Grades, quests and studying all help.</p>' : "") + '</section>';
   html += todayCardHtml();
+  html += diaryCardHtml();
   $("#view").innerHTML = html;
 }
 

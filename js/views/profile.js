@@ -2,12 +2,16 @@
 "use strict";
 
 const ACCENTS = [["apricot","Apricot","#f28f2c"],["rose","Rose","#e8627f"],["mint","Mint","#2fae83"],["sky","Sky","#3b8fd9"],["grape","Grape","#9a63e0"]];
+const FONTS = [["hand","Scribble"],["clean","Clean"],["script","Fancy"]];
+const CARDS = [["taped","Taped"],["plain","Plain"],["round","Round"]];
 const MODES = [["auto","Auto"],["light","Light"],["dark","Dark"]];
 
 // Looks (light/dark + accent color) are applied to the page itself
 function applyLook(){
   const l = S.look || {}, r = document.documentElement;
   if(l.mode === "light" || l.mode === "dark") r.setAttribute("data-theme", l.mode); else r.removeAttribute("data-theme");
+  if(l.font && l.font !== "hand") r.setAttribute("data-font", l.font); else r.removeAttribute("data-font");
+  if(l.cardstyle && l.cardstyle !== "taped") r.setAttribute("data-cards", l.cardstyle); else r.removeAttribute("data-cards");
   if(l.accent && l.accent !== "apricot") r.setAttribute("data-accent", l.accent); else r.removeAttribute("data-accent");
 }
 
@@ -53,6 +57,8 @@ function renderProfile(){
     '<section class="card"><div class="cardhead"><h2>Look</h2></div><div class="sheetform">' +
       '<div class="field"><label>Light or dark</label>' + seg("mode", MODES, l.mode || "auto") + '</div>' +
       '<div class="field"><label>Accent color</label><div class="chips swatches" role="group" aria-label="accent">' + ACCENTS.map(a => '<button type="button" class="swatch" data-accent="'+a[0]+'" style="--sw:'+a[2]+'" aria-pressed="'+((l.accent||"apricot")===a[0])+'" aria-label="'+a[1]+'"></button>').join("") + '</div></div>' +
+      '<div class="field"><label>Heading font</label>' + seg("font", FONTS, l.font || "hand") + '</div>' +
+      '<div class="field"><label>Card style</label>' + seg("cards", CARDS, l.cardstyle || "taped") + '</div>' +
       '<button type="button" class="btn ghost" id="profStyle" style="align-self:flex-start">🎀 Companion styles</button>' +
     '</div></section>' +
 
@@ -78,8 +84,8 @@ function profileMsg(t){ const m = $("#bkMsg"); if(m) m.textContent = t; toast(t)
 // Text typed by people (titles, notes) is fine and is always escaped when drawn, but ids, keys, short codes and
 // numbers must be plain, and no text may contain < or >. IF YOU ADD NEW SAVED FIELDS, add id-like ones to ID_KEYS
 // and number ones to NUM_KEYS so a bad backup cannot sneak code into the page.
-const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|status|start|end|m|a|s)$/;
-const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v|allowed|absent|day|min|cards|left|box|best|n|count)$/;
+const ID_KEYS = /(^|[a-z])id$|^(term|tpl|kind|cat|species|acc|room|theme|tone|font|cardstyle|scale|date|lastGift|streakFrom|eveningAt|petAt|activePet|at|when|due|time|status|start|end|m|a|s)$/;
+const NUM_KEYS = /^(amt|saved|price|ts|t|age|budget|cutoff|minUnits|treatsSpent|bonusTreats|studyTreats|jar|jarGoal|dayCap|skipped|hunger|joy|care|g0|xp|units|years|tpy|updated|v|allowed|absent|day|min|cards|left|box|best|n|count|read)$/;
 const BOOL_KEYS = /^(done|setup|welcomed|questsSeeded|pic)$/;
 function unsafeBackup(v, key, depth){
   depth = depth || 0;
@@ -113,6 +119,8 @@ document.addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b || currentTab() !== "profile") return;
   if(b.dataset.avatar){ S.profile = S.profile || {}; if(b.dataset.avatar === "photo" && !S.profile.photo){ $("#pPhoto").click(); return; } S.profile.avatar = b.dataset.avatar; profileSave(); renderProfile(); return; }
   if(b.dataset.mode){ S.look = Object.assign({mode:"auto", accent:"apricot"}, S.look, {mode:b.dataset.mode}); applyLook(); profileSave(); renderProfile(); return; }
+  if(b.dataset.font){ S.look = Object.assign({mode:"auto", accent:"apricot"}, S.look, {font:b.dataset.font}); applyLook(); profileSave(); renderProfile(); return; }
+  if(b.dataset.cards){ S.look = Object.assign({mode:"auto", accent:"apricot"}, S.look, {cardstyle:b.dataset.cards}); applyLook(); profileSave(); renderProfile(); return; }
   if(b.dataset.accent){ S.look = Object.assign({mode:"auto", accent:"apricot"}, S.look, {accent:b.dataset.accent}); applyLook(); profileSave(); renderProfile(); return; }
   if(b.id === "pPhotoDel"){ S.profile.photo = ""; S.profile.avatar = "pet"; profileSave(); renderProfile(); return; }
   if(b.id === "profStyle") return openStyle();

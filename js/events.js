@@ -23,6 +23,7 @@ document.addEventListener("click", e => {
   if(b.id === "styleBtn") return openStyle();
   if(b.id === "editPetBtn") return openMaker("edit", activePet().id);
   if(b.id === "giftBtn") return claimGift();
+  if(b.id === "diaryBtn") return openDiary();
   if(b.id === "adopt") return openMaker("new");
   if(b.dataset.pick){ S.activePet = b.dataset.pick; save(); renderAll(); return; }
   if(b.id === "addExpense") return openExpense();
